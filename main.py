@@ -35,6 +35,9 @@ class Weather_GUI:
         self.label_current_temp = ctk.CTkLabel(self.root, text="")
         self.label_current_temp.pack(padx=10, pady=10, anchor='w')
 
+        self.label_current_humidity = ctk.CTkLabel(self.root, text="")
+        self.label_current_humidity.pack(padx=10, pady=10, anchor='w')
+
         self.root.mainloop()
 
     def get_weather_data(self, ci):
@@ -52,8 +55,10 @@ class Weather_GUI:
         self.weather_info = self.get_weather_data(self.city_name)
             
         current_temp = self.weather_info['main']["temp"]
+        current_humidity = self.weather_info['main']['humidity']
 
         self.label_current_temp.configure(text=f"Current Temperature in {self.city_name.title()} is : {current_temp} C.", font=('Arial', 30))
+        self.label_current_humidity.configure(text=f"Current Humidity in {self.city_name.title()} is : {current_humidity} percent.", font=('Arial', 30))
 
 
 
