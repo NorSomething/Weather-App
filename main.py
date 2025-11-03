@@ -26,9 +26,6 @@ class Weather_GUI:
         self.label = ctk.CTkLabel(self.root, text='Weather App', font=('Arial', 55))
         self.label.pack(padx=10, pady=10)
 
-        #self.textbox = ctk.CTkTextbox(self.root, height=10, width=3000, font=('Arial', 45))
-        #self.textbox.pack(padx=10, pady=10)
-
         self.check_state = ctk.IntVar()
 
         self.button = ctk.CTkButton(self.root, text='Open Map', command=self.show_map, font=('Arial', 30))
@@ -55,7 +52,12 @@ class Weather_GUI:
     def get_weather_data(self, coor):
         lat = coor[0]
         lon = coor[1]
-        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={self.API_KEY}&units=metric"
+
+        #open weather map api
+        # url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={self.API_KEY}&units=metric"
+        
+        #open meteo api
+        url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}?key={self.API_KEY}"
 
         response = requests.get(url)
         if response.status_code == 200:
@@ -65,21 +67,15 @@ class Weather_GUI:
             pass
         
     def get_info(self):
-        #self.city_name = self.textbox.get('1.0', 'end').strip().lower()
-
-        #self.place = self.return_coords((123.223,213.000))
-        #self.place = self.return_coords()
+        
         self.weather_info = self.get_weather_data(self.place)
             
-        current_temp = self.weather_info['main']["temp"]
-        current_humidity = self.weather_info['main']['humidity']
+        current_temp = self.weather_info['currentConditions']["temp"]
+        current_humidity = self.weather_info['currentConditions']['humidity']
 
         self.label_current_temp.configure(text=f"Current Temperature in ____ is : {current_temp} C.", font=('Arial', 30))
         self.label_current_humidity.configure(text=f"Current Humidity in ____is : {current_humidity} percent.", font=('Arial', 30))
 
-
-
-        #weather_info = get_weather_data(city)
 
 class world_map:
 
