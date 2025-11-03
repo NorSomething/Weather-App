@@ -1,6 +1,7 @@
 import requests
-import tkinter as tk
+import tkinter
 import customtkinter as ctk
+import tkintermapview
 import os
 from tkinter import messagebox
 from tkinter import PhotoImage
@@ -14,20 +15,24 @@ class Weather_GUI:
 
         self.API_KEY = os.getenv('API_KEY')
         
+        self.place = None #idk why I put it here, doesnt work without it
+
         self.root = ctk.CTk()
 
-        self.root.geometry('800x600')
+        self.root.geometry('1600x1200')
         self.root.title('WeatherApp')
 
-        #city = input("Enter City : ")
 
         self.label = ctk.CTkLabel(self.root, text='Weather App', font=('Arial', 55))
         self.label.pack(padx=10, pady=10)
 
-        self.textbox = ctk.CTkTextbox(self.root, height=10, font=('Arial', 45))
-        self.textbox.pack(padx=10, pady=10)
+        #self.textbox = ctk.CTkTextbox(self.root, height=10, width=3000, font=('Arial', 45))
+        #self.textbox.pack(padx=10, pady=10)
 
         self.check_state = ctk.IntVar()
+
+        self.button = ctk.CTkButton(self.root, text='Open Map', command=self.show_map, font=('Arial', 30))
+        self.button.pack(padx=20, pady=20)
 
         self.button = ctk.CTkButton(self.root, text='Get Weather Information', command=self.get_info, font=('Arial', 30))
         self.button.pack(padx=20, pady=10)
@@ -40,10 +45,19 @@ class Weather_GUI:
 
         self.root.mainloop()
 
-    def get_weather_data(self, ci):
-        url = f"https://api.openweathermap.org/data/2.5/weather?q={ci}&appid={self.API_KEY}&units=metric"
-        response = requests.get(url)
+    def show_map(self):
+        world_map(self.root, self.return_coords)
 
+    def return_coords(self,coords):
+        self.place = coords
+
+
+    def get_weather_data(self, coor):
+        lat = coor[0]
+        lon = coor[1]
+        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={self.API_KEY}&units=metric"
+
+        response = requests.get(url)
         if response.status_code == 200:
             weather_data = response.json()
             return weather_data
@@ -51,18 +65,41 @@ class Weather_GUI:
             pass
         
     def get_info(self):
-        self.city_name = self.textbox.get('1.0', 'end').strip().lower()
-        self.weather_info = self.get_weather_data(self.city_name)
+        #self.city_name = self.textbox.get('1.0', 'end').strip().lower()
+
+        #self.place = self.return_coords((123.223,213.000))
+        #self.place = self.return_coords()
+        self.weather_info = self.get_weather_data(self.place)
             
         current_temp = self.weather_info['main']["temp"]
         current_humidity = self.weather_info['main']['humidity']
 
-        self.label_current_temp.configure(text=f"Current Temperature in {self.city_name.title()} is : {current_temp} C.", font=('Arial', 30))
-        self.label_current_humidity.configure(text=f"Current Humidity in {self.city_name.title()} is : {current_humidity} percent.", font=('Arial', 30))
+        self.label_current_temp.configure(text=f"Current Temperature in ____ is : {current_temp} C.", font=('Arial', 30))
+        self.label_current_humidity.configure(text=f"Current Humidity in ____is : {current_humidity} percent.", font=('Arial', 30))
 
 
 
         #weather_info = get_weather_data(city)
+
+class world_map:
+
+    def __init__(self, parent, callback):
+        
+        self.callback = callback
+
+        self.window = ctk.CTkToplevel(parent)
+        self.window.geometry('800x600')
+
+        map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=0)
+        map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+        
+        self.position = None
+        map_widget.add_left_click_map_command(self.put_marker)
+
+    def put_marker(self, coords):
+        print(coords)
+        self.callback(coords)
+        
 
 Weather_GUI()
 
