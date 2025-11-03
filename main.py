@@ -22,22 +22,34 @@ class Weather_GUI:
         self.root.geometry('1600x1200')
         self.root.title('WeatherApp')
 
+        #Top Frame --> Title, Open Map Button, Show Information Button
+        #Week Frame --> Days of the week
+        #Info Frame --> Grid : each cell has one information
 
-        self.label = ctk.CTkLabel(self.root, text='Weather App', font=('Arial', 55))
+        self.top_frame = ctk.CTkFrame(self.root)
+        self.top_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.week_frame = ctk.CTkFrame(self.root)
+        self.week_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.info_frame = ctk.CTkFrame(self.root)
+        self.info_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.label = ctk.CTkLabel(self.top_frame, text='Weather App', font=('Arial', 55))
         self.label.pack(padx=10, pady=10)
 
         self.check_state = ctk.IntVar()
 
-        self.button = ctk.CTkButton(self.root, text='Open Map', command=self.show_map, font=('Arial', 30))
+        self.button = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
         self.button.pack(padx=20, pady=20)
 
-        self.button = ctk.CTkButton(self.root, text='Get Weather Information', command=self.get_info, font=('Arial', 30))
+        self.button = ctk.CTkButton(self.top_frame, text='Get Weather Information', command=self.get_info, font=('Arial', 30))
         self.button.pack(padx=20, pady=10)
 
-        self.label_current_temp = ctk.CTkLabel(self.root, text="")
+        self.label_current_temp = ctk.CTkLabel(self.info_frame, text="")
         self.label_current_temp.pack(padx=10, pady=10, anchor='w')
 
-        self.label_current_humidity = ctk.CTkLabel(self.root, text="")
+        self.label_current_humidity = ctk.CTkLabel(self.info_frame, text="")
         self.label_current_humidity.pack(padx=10, pady=10, anchor='w')
 
         self.root.mainloop()
