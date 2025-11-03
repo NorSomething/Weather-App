@@ -25,15 +25,23 @@ class Weather_GUI:
         #Top Frame --> Title, Open Map Button, Show Information Button
         #Week Frame --> Days of the week
         #Info Frame --> Grid : each cell has one information
+            #->> Basic Infos ->> Grid 
+            #->> Description ->> not Grid
 
-        self.top_frame = ctk.CTkFrame(self.root)
+        self.top_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
         self.top_frame.pack(padx=20, pady=20, fill = 'x')
 
-        self.week_frame = ctk.CTkFrame(self.root)
+        self.week_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
         self.week_frame.pack(padx=20, pady=20, fill = 'x')
 
         self.info_frame = ctk.CTkFrame(self.root)
         self.info_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.basic_info_frame = ctk.CTkFrame(self.info_frame, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
+        self.basic_info_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.desc_frame = ctk.CTkFrame(self.info_frame)
+        self.desc_frame.pack(padx=20, pady=20, fill='x')
 
         self.label = ctk.CTkLabel(self.top_frame, text='Weather App', font=('Arial', 55))
         self.label.pack(padx=10, pady=10)
@@ -46,11 +54,17 @@ class Weather_GUI:
         self.button = ctk.CTkButton(self.top_frame, text='Get Weather Information', command=self.get_info, font=('Arial', 30))
         self.button.pack(padx=20, pady=10)
 
-        self.label_current_temp = ctk.CTkLabel(self.info_frame, text="")
-        self.label_current_temp.pack(padx=10, pady=10, anchor='w')
+        #self.day1_button = ctk.CTkButton(self.week_frame, text="Sunday", command=self.get_info, font=('Arial', 30))
+        #self.day1_button.grid(row = 1, column = 0, padx=20, pady=20, sticky = 'w')
 
-        self.label_current_humidity = ctk.CTkLabel(self.info_frame, text="")
-        self.label_current_humidity.pack(padx=10, pady=10, anchor='w')
+        self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.label_current_temp.grid(row = 0, column = 0, padx=10, pady=10, sticky='w')
+
+        self.label_current_humidity = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.label_current_humidity.grid(row = 0, column = 1, padx=10, pady=10, sticky='w')
+
+        self.label_current_description = ctk.CTkLabel(self.desc_frame, text="")
+        self.label_current_description.grid(row = 2, column = 0, padx = 20, pady = 10, sticky='w')
 
         self.root.mainloop()
 
@@ -83,10 +97,16 @@ class Weather_GUI:
         self.weather_info = self.get_weather_data(self.place)
             
         current_temp = self.weather_info['currentConditions']["temp"]
+        current_temp = (current_temp - 32)/1.8
+
         current_humidity = self.weather_info['currentConditions']['humidity']
+
+        current_description = self.weather_info['description']
 
         self.label_current_temp.configure(text=f"Current Temperature in ____ is : {current_temp} C.", font=('Arial', 30))
         self.label_current_humidity.configure(text=f"Current Humidity in ____is : {current_humidity} percent.", font=('Arial', 30))
+        self.label_current_description.configure(text=current_description, font=('Arial', 30))
+
 
 
 class world_map:
@@ -96,6 +116,7 @@ class world_map:
         self.callback = callback
 
         self.window = ctk.CTkToplevel(parent)
+        self.window.title("Map")
         self.window.geometry('800x600')
 
         map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=0)
