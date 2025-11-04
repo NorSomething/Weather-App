@@ -19,7 +19,7 @@ class Weather_GUI:
 
         self.root = ctk.CTk()
 
-        self.root.geometry('1600x1200')
+        self.root.geometry('1920x1080')
         self.root.title('WeatherApp')
 
         #Top Frame --> Title, Open Map Button, Show Information Button
@@ -93,6 +93,10 @@ class Weather_GUI:
         print("get info() triggered", self.place)
         
         self.weather_info = self.get_weather_data(self.place)
+
+        if not self.weather_info:
+            messagebox.showerror("Error", "No Data Found.")
+            return
             
         current_temp = self.weather_info['currentConditions']["temp"]
         current_temp = (current_temp - 32)/1.8
@@ -115,7 +119,7 @@ class world_map:
 
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Map")
-        self.window.geometry('800x600')
+        self.window.geometry('1920x1080')
 
         self.weather_map_frame = ctk.CTkFrame(self.window)
         self.weather_map_frame.pack(side='bottom', fill='x', pady=5)
@@ -134,6 +138,9 @@ class world_map:
 
         self.label_instructions = ctk.CTkLabel(self.weather_map_frame, text='Click on the place and press the button below to find information.', font=('Arial',22))
         self.label_instructions.pack(padx=10, pady=10)
+
+        self.quit_button = ctk.CTkButton(self.weather_map_frame,text="Close Map", command=self.window.destroy)
+        self.quit_button.pack(padx=10,pady=10)
 
 
     def put_marker(self, coords):
