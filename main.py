@@ -51,9 +51,6 @@ class Weather_GUI:
         self.button = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
         self.button.pack(padx=20, pady=20)
 
-        self.button = ctk.CTkButton(self.top_frame, text='Get Weather Information', command=self.get_info, font=('Arial', 30))
-        self.button.pack(padx=20, pady=10)
-
         #self.day1_button = ctk.CTkButton(self.week_frame, text="Sunday", command=self.get_info, font=('Arial', 30))
         #self.day1_button.grid(row = 1, column = 0, padx=20, pady=20, sticky = 'w')
 
@@ -72,7 +69,9 @@ class Weather_GUI:
         world_map(self.root, self.return_coords)
 
     def return_coords(self,coords):
+        print("return coords triggered", coords)
         self.place = coords
+        self.get_info()
 
 
     def get_weather_data(self, coor):
@@ -93,6 +92,8 @@ class Weather_GUI:
             pass
         
     def get_info(self):
+
+        print("get info() triggered", self.place)
         
         self.weather_info = self.get_weather_data(self.place)
             
@@ -103,7 +104,7 @@ class Weather_GUI:
 
         current_description = self.weather_info['description']
 
-        self.label_current_temp.configure(text=f"Current Temperature in ____ is : {current_temp} C.", font=('Arial', 30))
+        self.label_current_temp.configure(text=f"Current Temperature in ____ is : {current_temp:.2f} C.", font=('Arial', 30))
         self.label_current_humidity.configure(text=f"Current Humidity in ____is : {current_humidity} percent.", font=('Arial', 30))
         self.label_current_description.configure(text=current_description, font=('Arial', 30))
 
@@ -112,22 +113,40 @@ class Weather_GUI:
 class world_map:
 
     def __init__(self, parent, callback):
-        
+
         self.callback = callback
 
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Map")
         self.window.geometry('800x600')
 
-        map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=0)
-        map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+        self.weather_map_frame = ctk.CTkFrame(self.window)
+        self.weather_map_frame.pack(side='bottom', fill='x', pady=5)
+
+        self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=0)
+        self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
         
         self.position = None
-        map_widget.add_left_click_map_command(self.put_marker)
+        self.map_widget.add_left_click_map_command(self.put_marker)
+
+        self.label_find_information_button = ctk.CTkButton(self.weather_map_frame, command=self.select_pos, text="Find Information")
+        self.label_find_information_button.pack(padx = 10, pady = 10)
+
+        self.label_instructions = ctk.CTkLabel(self.weather_map_frame, text='Click on the place and press the button below to find information.', font=('Arial',22))
+        self.label_instructions.pack(padx=10, pady=10)
+
 
     def put_marker(self, coords):
-        print(coords)
-        self.callback(coords)
+        print("put marker() triggered", coords)
+        self.map_widget.set_marker(coords[0], coords[1], text="Selected Location")
+        self.position = coords
+        #print(coords, "have been selected.")
+
+    def select_pos(self):
+        print("select pos() triggered", self.position)
+        if self.position:
+            self.callback(self.position)
+
         
 
 Weather_GUI()
