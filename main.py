@@ -77,9 +77,6 @@ class Weather_GUI:
     def get_weather_data(self, coor):
         lat = coor[0]
         lon = coor[1]
-
-        #open weather map api
-        # url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={self.API_KEY}&units=metric"
         
         #open meteo api
         url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}?key={self.API_KEY}"
@@ -125,6 +122,9 @@ class world_map:
 
         self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=0)
         self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+
+        self.map_widget.set_position(12.961201, 77.590783)
+        self.map_widget.set_zoom(15)
         
         self.position = None
         self.map_widget.add_left_click_map_command(self.put_marker)
@@ -140,12 +140,15 @@ class world_map:
         print("put marker() triggered", coords)
         self.map_widget.set_marker(coords[0], coords[1], text="Selected Location")
         self.position = coords
-        #print(coords, "have been selected.")
 
+        
     def select_pos(self):
         print("select pos() triggered", self.position)
         if self.position:
             self.callback(self.position)
+            messagebox.showinfo("Info", "Weather Updated in App.")
+        else:
+            messagebox.showwarning("No Location", "No Location Selected.")
 
         
 
