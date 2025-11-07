@@ -31,6 +31,7 @@ class Weather_GUI:
         #Info Frame --> Grid : each cell has one information
             #->> Basic Infos ->> Grid 
             #->> Description ->> not Grid
+        #Conditional Frames --> Grid: each cell has information of stuff that needs computing (need sunscreen umrella)
 
         self.top_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
         self.top_frame.pack(padx=20, pady=20, fill = 'x')
@@ -40,6 +41,9 @@ class Weather_GUI:
 
         self.info_frame = ctk.CTkFrame(self.root)
         self.info_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="Today's Weather is as follows : ", font=('Arial', 40))
+        self.label_current_dets_heading.pack(padx=10,pady=10)
 
         self.basic_info_frame = ctk.CTkFrame(self.info_frame, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
         self.basic_info_frame.pack(padx=20, pady=20, fill = 'x')
@@ -58,14 +62,21 @@ class Weather_GUI:
         #self.day1_button = ctk.CTkButton(self.week_frame, text="Sunday", command=self.get_info, font=('Arial', 30))
         #self.day1_button.grid(row = 1, column = 0, padx=20, pady=20, sticky = 'w')
 
+
         self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_current_temp.grid(row = 0, column = 0, padx=10, pady=10, sticky='w')
+        self.label_current_temp.grid(row = 1, column = 0, padx=10, pady=10, sticky='w')
 
         self.label_current_humidity = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_current_humidity.grid(row = 0, column = 1, padx=10, pady=10, sticky='w')
+        self.label_current_humidity.grid(row = 1, column = 1, padx=10, pady=10, sticky='w')
 
         self.label_current_description = ctk.CTkLabel(self.desc_frame, text="")
         self.label_current_description.grid(row = 2, column = 0, padx = 20, pady = 10, sticky='w')
+
+        self.label_precip_percent = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.label_precip_percent.grid(row = 3, column = 0, padx=10, pady=10, sticky='w')
+
+        self.labeL_uv_index = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.labeL_uv_index.grid(row = 3, column = 1, padx=10, pady=10, sticky='w')
 
         self.root.mainloop()
 
@@ -107,9 +118,6 @@ class Weather_GUI:
             return
 
         days = self.weather_info["days"][:7]
-
-        
-
             
         current_temp = self.weather_info['currentConditions']["temp"]
         #current_temp = (current_temp - 32)/1.8
@@ -118,9 +126,15 @@ class Weather_GUI:
 
         current_description = self.weather_info['description']
 
+        current_uv_index = self.weather_info['currentConditions']['uvindex']
+
+        current_precp_percent = self.weather_info['currentConditions']['precipprob']
+
         self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 30))
         self.label_current_humidity.configure(text=f"Current Humidity is : {current_humidity} percent.", font=('Arial', 30))
         self.label_current_description.configure(text=current_description, font=('Arial', 30))
+        self.label_precip_percent.configure(text=f"Current Chance of Rain is : {current_precp_percent} percent.", font=('Arial', 30))
+        self.labeL_uv_index.configure(text=f"Current UV Index is : {current_uv_index}.", font=('Arial', 30))
 
 
 
@@ -140,7 +154,7 @@ class world_map:
         self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=0)
         self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
-        self.map_widget.set_position(12.961201, 77.590783)
+        self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
         self.map_widget.set_zoom(15)
         
         self.position = None
