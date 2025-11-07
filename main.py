@@ -3,6 +3,7 @@ import tkinter
 import customtkinter as ctk
 import tkintermapview
 import os
+import datetime
 from tkinter import messagebox
 from tkinter import PhotoImage
 from dotenv import load_dotenv
@@ -21,6 +22,9 @@ class Weather_GUI:
 
         self.root.geometry('1920x1080')
         self.root.title('WeatherApp')
+
+        self.date = datetime.datetime.now()
+        self.current_date = str(self.date)[8:10]
 
         #Top Frame --> Title, Open Map Button, Show Information Button
         #Week Frame --> Days of the week
@@ -78,8 +82,11 @@ class Weather_GUI:
         lat = coor[0]
         lon = coor[1]
         
-        #open meteo api
-        url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}?key={self.API_KEY}"
+        #visual crossing api
+        #url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}/{f'2025-11-{str(int(self.current_date)+1)}'}?key={self.API_KEY}"
+
+        #visual crossing api -> with weekly stuff
+        url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}?unitGroup=metric&key={self.API_KEY}"
 
         response = requests.get(url)
         if response.status_code == 200:
@@ -91,22 +98,28 @@ class Weather_GUI:
     def get_info(self):
 
         print("get info() triggered", self.place)
+        print("date time is ", self.date)
         
         self.weather_info = self.get_weather_data(self.place)
 
         if not self.weather_info:
             messagebox.showerror("Error", "No Data Found.")
             return
+
+        days = self.weather_info["days"][:7]
+
+        
+
             
         current_temp = self.weather_info['currentConditions']["temp"]
-        current_temp = (current_temp - 32)/1.8
+        #current_temp = (current_temp - 32)/1.8
 
         current_humidity = self.weather_info['currentConditions']['humidity']
 
         current_description = self.weather_info['description']
 
-        self.label_current_temp.configure(text=f"Current Temperature in ____ is : {current_temp:.2f} C.", font=('Arial', 30))
-        self.label_current_humidity.configure(text=f"Current Humidity in ____is : {current_humidity} percent.", font=('Arial', 30))
+        self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 30))
+        self.label_current_humidity.configure(text=f"Current Humidity is : {current_humidity} percent.", font=('Arial', 30))
         self.label_current_description.configure(text=current_description, font=('Arial', 30))
 
 
