@@ -42,7 +42,10 @@ class Weather_GUI:
         self.info_frame = ctk.CTkFrame(self.root)
         self.info_frame.pack(padx=20, pady=20, fill = 'x')
 
-        self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="Today's Weather is as follows : ", font=('Arial', 40))
+        self.conditional_frame = ctk.CTkFrame(self.root)
+        self.conditional_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="")
         self.label_current_dets_heading.pack(padx=10,pady=10)
 
         self.basic_info_frame = ctk.CTkFrame(self.info_frame, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
@@ -78,6 +81,12 @@ class Weather_GUI:
         self.labeL_uv_index = ctk.CTkLabel(self.basic_info_frame, text="")
         self.labeL_uv_index.grid(row = 3, column = 1, padx=10, pady=10, sticky='w')
 
+        self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
+        self.label_umbrella_check.grid(row=0, column=0, padx=10, pady=10)
+
+        self.label_sunscreen_check = ctk.CTkLabel(self.conditional_frame, text="")
+        self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)
+
         self.root.mainloop()
 
     def show_map(self):
@@ -87,6 +96,20 @@ class Weather_GUI:
         print("return coords triggered", coords)
         self.place = coords
         self.get_info()
+
+    def umbrella_check(self, preprob):
+        msg = "Umbrella is not needed today."
+        if preprob >= 45:
+            msg = "An Umbrella Would Come in Handy Today."
+            return msg
+        return msg
+    
+    def sunscreen_check(self, uvindex):
+        msg = "Sunscreen is not needed today."
+        if uvindex >= 3:
+            msg = "Wear Sunscreen Before Going Out Today."
+            return msg
+        return msg
 
 
     def get_weather_data(self, coor):
@@ -130,11 +153,15 @@ class Weather_GUI:
 
         current_precp_percent = self.weather_info['currentConditions']['precipprob']
 
+        self.label_current_dets_heading.configure(text="Today's Weather is as follows : ", font=('Arial', 40))
+
         self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 30))
         self.label_current_humidity.configure(text=f"Current Humidity is : {current_humidity} percent.", font=('Arial', 30))
         self.label_current_description.configure(text=current_description, font=('Arial', 30))
         self.label_precip_percent.configure(text=f"Current Chance of Rain is : {current_precp_percent} percent.", font=('Arial', 30))
         self.labeL_uv_index.configure(text=f"Current UV Index is : {current_uv_index}.", font=('Arial', 30))
+        self.label_umbrella_check.configure(text=self.umbrella_check(current_precp_percent), font=('Arial', 30))
+        self.label_sunscreen_check.configure(text=self.sunscreen_check(current_uv_index), font=('Arial', 30))
 
 
 
@@ -151,7 +178,7 @@ class world_map:
         self.weather_map_frame = ctk.CTkFrame(self.window)
         self.weather_map_frame.pack(side='bottom', fill='x', pady=5)
 
-        self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=0)
+        self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=15)
         self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
         self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
