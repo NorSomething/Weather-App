@@ -17,6 +17,7 @@ class Weather_GUI:
         self.API_KEY = os.getenv('API_KEY')
         
         self.place = None #idk why I put it here, doesnt work without it
+        self.fav_place = None
 
         self.root = ctk.CTk()
 
@@ -25,6 +26,8 @@ class Weather_GUI:
 
         self.date = datetime.datetime.now()
         self.current_date = str(self.date)[8:10]
+
+        self.user_selected_fav_loc = 0
 
         #Top Frame --> Title, Open Map Button, Show Information Button
         #Week Frame --> Days of the week
@@ -107,8 +110,11 @@ class Weather_GUI:
             data = (data).strip().split(',')
             
             lat, long = data[0], data[1].strip()
+    
+        self.user_selected_fav_loc = 1
 
-    return lat, long
+        self.fav_place = (lat, long)
+        self.get_info()
 
     def umbrella_check(self, preprob):
         msg = "Umbrella is not needed today."
@@ -147,8 +153,13 @@ class Weather_GUI:
         print("get info() triggered", self.place)
         print("date time is ", self.date)
         
-        self.weather_info = self.get_weather_data(self.place)
+        if self.user_selected_fav_loc:
+            self.weather_info = self.get_weather_data(self.fav_place)
+        else:
+            self.weather_info = self.get_weather_data(self.place)
 
+
+    
         if not self.weather_info:
             messagebox.showerror("Error", "No Data Found.")
             return
@@ -269,6 +280,7 @@ class select_fav_places:
         #print("put marker() triggered", coords)
         self.map_widget.set_marker(coords[0], coords[1], text="Selected Location")
         self.fav_pos = coords
+        self.callback(self.fav_pos)
 
     def store_data(self):
 
