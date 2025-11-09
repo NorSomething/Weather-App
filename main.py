@@ -62,9 +62,6 @@ class Weather_GUI:
         self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
         self.button_map.pack(padx=20, pady=20)
 
-        self.button_fav_places = ctk.CTkButton(self.top_frame, text='Select Fav Places', command=self.show_fav_place_window, font=('Arial', 30))
-        self.button_fav_places.pack(padx=20, pady=20)
-
         #self.day1_button = ctk.CTkButton(self.week_frame, text="Sunday", command=self.get_info, font=('Arial', 30))
         #self.day1_button.grid(row = 1, column = 0, padx=20, pady=20, sticky = 'w')
 
@@ -99,13 +96,6 @@ class Weather_GUI:
         print("return coords triggered", coords)
         self.place = coords
         self.get_info()
-
-    def show_fav_place_window(self):
-        select_fav_places(self.root, self.return_loc_fav)
-
-    def return_loc_fav(self, loc):
-        print("return fav locs triggered")
-
 
     def umbrella_check(self, preprob):
         msg = "Umbrella is not needed today."
@@ -200,6 +190,9 @@ class world_map:
         
         self.position = None
         self.map_widget.add_left_click_map_command(self.put_marker)
+        
+        self.button_fav_places = ctk.CTkButton(self.weather_map_frame, text='Select Fav Places', command=self.show_fav_place_window)
+        self.button_fav_places.grid(row = 3, column = 0, padx=20, pady=20)
 
         self.label_find_information_button = ctk.CTkButton(self.weather_map_frame, command=self.select_pos, text="Find Information")
         self.label_find_information_button.grid(row = 0, column = 0, padx = 10, pady = 10, sticky='')
@@ -210,6 +203,12 @@ class world_map:
         self.quit_button = ctk.CTkButton(self.weather_map_frame,text="Close Map", command=self.window.destroy)
         self.quit_button.grid(row = 2, column = 0, padx=10,pady=10, sticky = '')
 
+
+    def show_fav_place_window(self):
+        select_fav_places(self.window, self.return_loc_fav)
+
+    def return_loc_fav(self, loc):
+        print("return fav locs triggered")
 
     def put_marker(self, coords):
         print("put marker() triggered", coords)
@@ -235,6 +234,31 @@ class select_fav_places:
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Select Fav Locations")
         self.window.geometry('1920x1080')
+
+
+        self.fav_places_frame = ctk.CTkFrame(self.window)
+        self.fav_places_frame.pack(side='bottom', fill='x', pady=5)
+
+        self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=15)
+        self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+
+        self.fav_pos = None
+        self.map_widget.add_left_click_map_command(self.put_marker)
+
+        self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
+        self.map_widget.set_zoom(15)
+
+        self.select_fav_button = ctk.CTkButton(self.fav_places_frame, text='Set location as Fav Place.')
+        self.select_fav_button.grid(row=0, column=0)
+
+    def put_marker(self, coords):
+        print("put marker() triggered", coords)
+        self.map_widget.set_marker(coords[0], coords[1], text="Selected Location")
+        self.position = coords
+
+
+        
+        
 
 
 
