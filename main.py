@@ -248,13 +248,24 @@ class select_fav_places:
         self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
         self.map_widget.set_zoom(15)
 
-        self.select_fav_button = ctk.CTkButton(self.fav_places_frame, text='Set location as Fav Place.')
+        self.select_fav_button = ctk.CTkButton(self.fav_places_frame, command=self.store_data, text='Set location as Fav Place.')
         self.select_fav_button.grid(row=0, column=0)
 
+
     def put_marker(self, coords):
-        print("put marker() triggered", coords)
+        #print("put marker() triggered", coords)
         self.map_widget.set_marker(coords[0], coords[1], text="Selected Location")
-        self.position = coords
+        self.fav_pos = coords
+
+    def store_data(self):
+
+        with open('fav.txt', 'w') as f:
+            print(self.fav_pos, file=f)
+
+        
+
+
+
 
 
         
