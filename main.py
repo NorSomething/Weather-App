@@ -62,6 +62,9 @@ class Weather_GUI:
         self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
         self.button_map.pack(padx=20, pady=20)
 
+        self.button_get_fav = ctk.CTkButton(self.top_frame, text='Get Info of Fav Loc', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav.pack(padx=20, pady=20)
+
         #self.day1_button = ctk.CTkButton(self.week_frame, text="Sunday", command=self.get_info, font=('Arial', 30))
         #self.day1_button.grid(row = 1, column = 0, padx=20, pady=20, sticky = 'w')
 
@@ -96,6 +99,16 @@ class Weather_GUI:
         print("return coords triggered", coords)
         self.place = coords
         self.get_info()
+
+    def return_favinfo(self):
+
+        with open('fav.txt', 'r') as f:
+            data = f.read()[1:-1:1]
+            data = (data).strip().split(',')
+            
+            lat, long = data[0], data[1].strip()
+
+    return lat, long
 
     def umbrella_check(self, preprob):
         msg = "Umbrella is not needed today."
