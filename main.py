@@ -59,8 +59,11 @@ class Weather_GUI:
 
         self.check_state = ctk.IntVar()
 
-        self.button = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
-        self.button.pack(padx=20, pady=20)
+        self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
+        self.button_map.pack(padx=20, pady=20)
+
+        self.button_fav_places = ctk.CTkButton(self.top_frame, text='Select Fav Places', command=self.show_fav_place_window, font=('Arial', 30))
+        self.button_fav_places.pack(padx=20, pady=20)
 
         #self.day1_button = ctk.CTkButton(self.week_frame, text="Sunday", command=self.get_info, font=('Arial', 30))
         #self.day1_button.grid(row = 1, column = 0, padx=20, pady=20, sticky = 'w')
@@ -96,6 +99,13 @@ class Weather_GUI:
         print("return coords triggered", coords)
         self.place = coords
         self.get_info()
+
+    def show_fav_place_window(self):
+        select_fav_places(self.root, self.return_loc_fav)
+
+    def return_loc_fav(self, loc):
+        print("return fav locs triggered")
+        
 
     def umbrella_check(self, preprob):
         msg = "Umbrella is not needed today."
@@ -212,6 +222,15 @@ class world_map:
             messagebox.showwarning("No Location", "No Location Selected.")
 
         
+class select_fav_places:
+
+    def __init__(self, parent, callback):
+
+        self.callback = callback
+
+        self.window = ctk.CTkToplevel(parent)
+        self.window.title("Select Fav Locations")
+        self.window.geometry('1920x1080')
 
 Weather_GUI()
 
