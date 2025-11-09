@@ -48,14 +48,23 @@ class Weather_GUI:
         self.conditional_frame = ctk.CTkFrame(self.root)
         self.conditional_frame.pack(padx=20, pady=20, fill = 'x')
 
+        self.conditional_frame.grid_columnconfigure(0, weight=1)
+        self.conditional_frame.grid_rowconfigure((0,1), weight=1)
+
         self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="")
         self.label_current_dets_heading.pack(padx=10,pady=10)
 
         self.basic_info_frame = ctk.CTkFrame(self.info_frame, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
         self.basic_info_frame.pack(padx=20, pady=20, fill = 'x')
 
+        self.basic_info_frame.grid_columnconfigure((0,1), weight=1)
+        self.basic_info_frame.grid_rowconfigure((0,1,2), weight=1)
+
         self.desc_frame = ctk.CTkFrame(self.info_frame)
         self.desc_frame.pack(padx=20, pady=20, fill='x')
+
+        self.desc_frame.grid_columnconfigure(0, weight=1)
+        self.desc_frame.grid_rowconfigure(0, weight=1)
 
         self.label = ctk.CTkLabel(self.top_frame, text='Weather App', font=('Arial', 55))
         self.label.pack(padx=10, pady=10)
@@ -69,19 +78,19 @@ class Weather_GUI:
         self.button_get_fav.pack(padx=20, pady=20)
 
         self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_current_temp.grid(row = 1, column = 0, padx=10, pady=10, sticky='w')
+        self.label_current_temp.grid(row = 0, column = 0, padx=10, pady=10, sticky='w')
 
         self.label_current_humidity = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_current_humidity.grid(row = 1, column = 1, padx=10, pady=10, sticky='w')
+        self.label_current_humidity.grid(row = 0, column = 1, padx=10, pady=10, sticky='w')
 
         self.label_current_description = ctk.CTkLabel(self.desc_frame, text="")
-        self.label_current_description.grid(row = 2, column = 0, padx = 20, pady = 10, sticky='w')
+        self.label_current_description.grid(row = 0, column = 0, padx = 20, pady = 10)
 
         self.label_precip_percent = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_precip_percent.grid(row = 3, column = 0, padx=10, pady=10, sticky='w')
+        self.label_precip_percent.grid(row = 2, column = 0, padx=10, pady=10, sticky='w')
 
         self.labeL_uv_index = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.labeL_uv_index.grid(row = 3, column = 1, padx=10, pady=10, sticky='w')
+        self.labeL_uv_index.grid(row = 2, column = 1, padx=10, pady=10, sticky='w')
 
         self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
         self.label_umbrella_check.grid(row=0, column=0, padx=10, pady=10)
