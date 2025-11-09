@@ -105,7 +105,7 @@ class Weather_GUI:
 
     def return_loc_fav(self, loc):
         print("return fav locs triggered")
-        
+
 
     def umbrella_check(self, preprob):
         msg = "Umbrella is not needed today."
@@ -188,6 +188,10 @@ class world_map:
         self.weather_map_frame = ctk.CTkFrame(self.window)
         self.weather_map_frame.pack(side='bottom', fill='x', pady=5)
 
+        #grid configs
+        self.weather_map_frame.grid_columnconfigure(0, weight=1)
+        self.weather_map_frame.grid_rowconfigure((0,1,2), weight=1)
+
         self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=15)
         self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
@@ -198,13 +202,13 @@ class world_map:
         self.map_widget.add_left_click_map_command(self.put_marker)
 
         self.label_find_information_button = ctk.CTkButton(self.weather_map_frame, command=self.select_pos, text="Find Information")
-        self.label_find_information_button.pack(padx = 10, pady = 10)
+        self.label_find_information_button.grid(row = 0, column = 0, padx = 10, pady = 10, sticky='')
 
         self.label_instructions = ctk.CTkLabel(self.weather_map_frame, text='Click on the place and press the button below to find information.', font=('Arial',22))
-        self.label_instructions.pack(padx=10, pady=10)
+        self.label_instructions.grid(row = 1, column = 0, padx=10, pady=10, sticky = '')
 
         self.quit_button = ctk.CTkButton(self.weather_map_frame,text="Close Map", command=self.window.destroy)
-        self.quit_button.pack(padx=10,pady=10)
+        self.quit_button.grid(row = 2, column = 0, padx=10,pady=10, sticky = '')
 
 
     def put_marker(self, coords):
@@ -231,6 +235,8 @@ class select_fav_places:
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Select Fav Locations")
         self.window.geometry('1920x1080')
+
+
 
 Weather_GUI()
 
