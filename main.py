@@ -68,10 +68,6 @@ class Weather_GUI:
         self.button_get_fav = ctk.CTkButton(self.top_frame, text='Get Info of Fav Loc', command=self.return_favinfo, font=('Arial', 30))
         self.button_get_fav.pack(padx=20, pady=20)
 
-        #self.day1_button = ctk.CTkButton(self.week_frame, text="Sunday", command=self.get_info, font=('Arial', 30))
-        #self.day1_button.grid(row = 1, column = 0, padx=20, pady=20, sticky = 'w')
-
-
         self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
         self.label_current_temp.grid(row = 1, column = 0, padx=10, pady=10, sticky='w')
 
@@ -134,9 +130,6 @@ class Weather_GUI:
     def get_weather_data(self, coor):
         lat = coor[0]
         lon = coor[1]
-        
-        #visual crossing api
-        #url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}/{f'2025-11-{str(int(self.current_date)+1)}'}?key={self.API_KEY}"
 
         #visual crossing api -> with weekly stuff
         url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{lat},{lon}?unitGroup=metric&key={self.API_KEY}"
@@ -167,7 +160,6 @@ class Weather_GUI:
         days = self.weather_info["days"][:7]
             
         current_temp = self.weather_info['currentConditions']["temp"]
-        #current_temp = (current_temp - 32)/1.8
 
         current_humidity = self.weather_info['currentConditions']['humidity']
 
@@ -277,7 +269,6 @@ class select_fav_places:
 
 
     def put_marker(self, coords):
-        #print("put marker() triggered", coords)
         self.map_widget.set_marker(coords[0], coords[1], text="Selected Location")
         self.fav_pos = coords
         self.callback(self.fav_pos)
@@ -286,15 +277,6 @@ class select_fav_places:
 
         with open('fav.txt', 'w') as f:
             print(self.fav_pos, file=f)
-
-        
-
-
-
-
-
-        
-        
 
 
 
