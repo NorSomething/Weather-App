@@ -84,16 +84,16 @@ class Weather_GUI:
         self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
         self.button_map.pack(padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 1', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 1', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30))
         self.button_get_fav.grid(row = 0, column = 0, padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 2', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 2', command= lambda : self.return_favinfo('fav_place2'), font=('Arial', 30))
         self.button_get_fav.grid(row = 0, column = 1, padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 3', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 3', command= lambda : self.return_favinfo('fav_place3'), font=('Arial', 30))
         self.button_get_fav.grid(row = 0, column = 2, padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
         self.button_get_fav.grid(row = 0, column = 3, padx=20, pady=20)
 
         self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
@@ -127,14 +127,17 @@ class Weather_GUI:
         self.place = coords
         self.get_info()
 
-    def return_favinfo(self):
+    def return_favinfo(self, loc_key):
 
-        with open('fav.txt', 'r') as f:
-            data = f.read()[1:-1:1]
-            data = (data).strip().split(',')
+        with open('fav_places.json', 'r') as f:
+            data = json.load(f)
+
+        cors = data[loc_key] 
+
+        
             
-            lat, long = data[0], data[1].strip()
-    
+        lat, long = cors[0], cors[1]
+        
         self.user_selected_fav_loc = 1
 
         self.fav_place = (lat, long)
