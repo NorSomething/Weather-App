@@ -7,6 +7,7 @@ import datetime
 from tkinter import messagebox
 from tkinter import PhotoImage
 from dotenv import load_dotenv
+import json
 
 import world_map
 import fav_place

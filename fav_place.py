@@ -7,6 +7,7 @@ import datetime
 from tkinter import messagebox
 from tkinter import PhotoImage
 from dotenv import load_dotenv
+import json
 
 class select_fav_places:
 
@@ -34,16 +35,17 @@ class select_fav_places:
         self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
         self.map_widget.set_zoom(15)
 
-        self.select_fav_button1 = ctk.CTkButton(self.fav_places_frame, command=self.store_data, text='Set location as Fav Place 1')
+        #passing lambda funcition here cuz command cant take functions with parameters
+        self.select_fav_button1 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place1"), text='Set location as Fav Place 1')
         self.select_fav_button1.grid(row=0, column=0)
 
-        self.select_fav_button2 = ctk.CTkButton(self.fav_places_frame, command=self.store_data, text='Set location as Fav Place 2')
+        self.select_fav_button2 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place2"), text='Set location as Fav Place 2')
         self.select_fav_button2.grid(row=0, column=1)
         
-        self.select_fav_button3 = ctk.CTkButton(self.fav_places_frame, command=self.store_data, text='Set location as Fav Place 3')
+        self.select_fav_button3 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place3"), text='Set location as Fav Place 3')
         self.select_fav_button3.grid(row=0, column=2)
 
-        self.select_fav_button4 = ctk.CTkButton(self.fav_places_frame, command=self.store_data, text='Set location as Fav Place 4')
+        self.select_fav_button4 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place4"), text='Set location as Fav Place 4')
         self.select_fav_button4.grid(row=0, column=3)
 
 
@@ -52,9 +54,17 @@ class select_fav_places:
         self.fav_pos = coords
         self.callback(self.fav_pos)
 
-    def store_data(self):
+    def store_data(self, fav_key):
 
-        with open('fav.txt', 'a') as f:
-            print(self.fav_pos, file=f)
+        try:
+            with open('fav_places.json', 'r') as f:
+                data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = dict()
+
+        data[fav_key] = self.fav_pos
+
+        with open('fav_places.json', 'w') as f:
+            json.dump(data, f, indent=4)
 
 
