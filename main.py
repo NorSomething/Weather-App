@@ -52,6 +52,12 @@ class Weather_GUI:
         self.conditional_frame = ctk.CTkFrame(self.root)
         self.conditional_frame.pack(padx=20, pady=20, fill = 'x')
 
+        self.fav_loc_frame = ctk.CTkFrame(self.root)
+        self.fav_loc_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.fav_loc_frame.grid_columnconfigure((0,1,2,3), weight=1)
+        self.fav_loc_frame.grid_rowconfigure(0, weight=1)
+
         self.conditional_frame.grid_columnconfigure(0, weight=1)
         self.conditional_frame.grid_rowconfigure((0,1), weight=1)
 
@@ -78,8 +84,17 @@ class Weather_GUI:
         self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
         self.button_map.pack(padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.top_frame, text='Get Info of Fav Loc', command=self.return_favinfo, font=('Arial', 30))
-        self.button_get_fav.pack(padx=20, pady=20)
+        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 1', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav.grid(row = 0, column = 0, padx=20, pady=20)
+
+        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 2', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav.grid(row = 0, column = 1, padx=20, pady=20)
+
+        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 3', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav.grid(row = 0, column = 2, padx=20, pady=20)
+
+        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command=self.return_favinfo, font=('Arial', 30))
+        self.button_get_fav.grid(row = 0, column = 3, padx=20, pady=20)
 
         self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
         self.label_current_temp.grid(row = 0, column = 0, padx=10, pady=10, sticky='w')
@@ -152,7 +167,7 @@ class Weather_GUI:
             weather_data = response.json()
             return weather_data
         else:
-            pass
+            messagebox.showerror("No Data", "Something went wrong with API\nPlease try again in a few minutes.")
         
     def get_info(self):
 
