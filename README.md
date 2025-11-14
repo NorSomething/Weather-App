@@ -1,0 +1,5 @@
+- [x] Main GUI
+- [x] Fav Location Saving
+- [ ] Beautify GUI
+- [ ] Weekly Data
+- [ ] Graphs
