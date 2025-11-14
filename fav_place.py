@@ -31,7 +31,9 @@ class select_fav_places:
 
         self.fav_pos = None
         self.map_widget.add_left_click_map_command(self.put_marker)
+        #self.button_get_fav = ctk.CTkButton(self.top_frame, text='Get Info of Fav Loc 1', command=self.return_favinfo, font=('Arial', 30))
 
+        #self.button_get_fav.grid(row = 0, column = 0, padx=20, pady=20)
         self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
         self.map_widget.set_zoom(15)
 

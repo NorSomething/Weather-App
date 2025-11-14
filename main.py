@@ -29,7 +29,7 @@ class Weather_GUI:
         self.root.title('WeatherApp')
 
         self.date = datetime.datetime.now()
-        self.current_date = str(self.date)[8:10]
+        self.current_date = str(self.date)[8:10] #might be useful when weekly data implementation
 
         self.user_selected_fav_loc = 0
 
@@ -43,20 +43,23 @@ class Weather_GUI:
         self.top_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
         self.top_frame.pack(padx=20, pady=20, fill = 'x')
 
-        self.week_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
-        self.week_frame.pack(padx=20, pady=20, fill = 'x')
+        self.top_frame.grid_columnconfigure((0), weight=1)
+        self.top_frame.grid_rowconfigure((0), weight=1)
+        
+        self.fav_loc_frame = ctk.CTkFrame(self.root)
+        self.fav_loc_frame.pack(padx=20, pady=20, fill = 'x') 
+
+        self.fav_loc_frame.grid_columnconfigure((0,1,2,3), weight=1)
+        self.fav_loc_frame.grid_rowconfigure((0,1,2,3), weight=1)
+
+        #self.week_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
+        #self.week_frame.pack(padx=20, pady=20, fill = 'x')
 
         self.info_frame = ctk.CTkFrame(self.root)
         self.info_frame.pack(padx=20, pady=20, fill = 'x')
 
         self.conditional_frame = ctk.CTkFrame(self.root)
         self.conditional_frame.pack(padx=20, pady=20, fill = 'x')
-
-        self.fav_loc_frame = ctk.CTkFrame(self.root)
-        self.fav_loc_frame.pack(padx=20, pady=20, fill = 'x')
-
-        self.fav_loc_frame.grid_columnconfigure((0,1,2,3), weight=1)
-        self.fav_loc_frame.grid_rowconfigure(0, weight=1)
 
         self.conditional_frame.grid_columnconfigure(0, weight=1)
         self.conditional_frame.grid_rowconfigure((0,1), weight=1)
@@ -77,24 +80,24 @@ class Weather_GUI:
         self.desc_frame.grid_rowconfigure(0, weight=1)
 
         self.label = ctk.CTkLabel(self.top_frame, text='Weather App', font=('Arial', 55))
-        self.label.pack(padx=10, pady=10)
+        self.label.grid(row = 0, column = 0, padx=10, pady=10)
 
         self.check_state = ctk.IntVar()
 
         self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
-        self.button_map.pack(padx=20, pady=20)
+        self.button_map.grid(row = 1, column=0, padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 1', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30))
-        self.button_get_fav.grid(row = 0, column = 0, padx=20, pady=20)
+        self.button_get_fav1 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 1', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30))
+        self.button_get_fav1.grid(row = 2, column = 0, padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 2', command= lambda : self.return_favinfo('fav_place2'), font=('Arial', 30))
-        self.button_get_fav.grid(row = 0, column = 1, padx=20, pady=20)
+        self.button_get_fav2 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 2', command= lambda : self.return_favinfo('fav_place2'), font=('Arial', 30))
+        self.button_get_fav2.grid(row = 2, column = 1, padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 3', command= lambda : self.return_favinfo('fav_place3'), font=('Arial', 30))
-        self.button_get_fav.grid(row = 0, column = 2, padx=20, pady=20)
+        self.button_get_fav3 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 3', command= lambda : self.return_favinfo('fav_place3'), font=('Arial', 30))
+        self.button_get_fav3.grid(row = 2, column = 2, padx=20, pady=20)
 
-        self.button_get_fav = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
-        self.button_get_fav.grid(row = 0, column = 3, padx=20, pady=20)
+        self.button_get_fav4 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
+        self.button_get_fav4.grid(row = 2, column = 3, padx=20, pady=20)
 
         self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
         self.label_current_temp.grid(row = 0, column = 0, padx=10, pady=10, sticky='w')
@@ -133,11 +136,9 @@ class Weather_GUI:
             data = json.load(f)
 
         cors = data[loc_key] 
-
-        
             
         lat, long = cors[0], cors[1]
-        
+
         self.user_selected_fav_loc = 1
 
         self.fav_place = (lat, long)
@@ -186,7 +187,6 @@ class Weather_GUI:
             messagebox.showerror("Error", "No Data Found.")
             return
 
-        days = self.weather_info["days"][:7]
             
         current_temp = self.weather_info['currentConditions']["temp"]
 
@@ -198,7 +198,7 @@ class Weather_GUI:
 
         current_precp_percent = self.weather_info['currentConditions']['precipprob']
 
-        self.label_current_dets_heading.configure(text="Today's Weather is as follows : ", font=('Arial', 40))
+        self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
         self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 30))
         self.label_current_humidity.configure(text=f"Current Humidity is : {current_humidity} percent.", font=('Arial', 30))
@@ -209,8 +209,6 @@ class Weather_GUI:
         self.label_sunscreen_check.configure(text=self.sunscreen_check(current_uv_index), font=('Arial', 30))
 
 
-
-        
 
 Weather_GUI()
 
