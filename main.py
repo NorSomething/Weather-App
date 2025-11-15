@@ -55,30 +55,7 @@ class Weather_GUI:
         #self.week_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
         #self.week_frame.pack(padx=20, pady=20, fill = 'x')
 
-        self.info_frame = ctk.CTkFrame(self.root)
-        self.info_frame.pack(padx=20, pady=20, fill = 'x')
-
-        self.conditional_frame = ctk.CTkFrame(self.root)
-        self.conditional_frame.pack(padx=20, pady=20, fill = 'x')
-
-        self.conditional_frame.grid_columnconfigure(0, weight=1)
-        self.conditional_frame.grid_rowconfigure((0,1), weight=1)
-
-        self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="")
-        self.label_current_dets_heading.pack(padx=10,pady=10)
-
-        self.basic_info_frame = ctk.CTkFrame(self.info_frame, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
-        self.basic_info_frame.pack(padx=20, pady=20, fill = 'x')
-
-        self.basic_info_frame.grid_columnconfigure((0,1), weight=1)
-        self.basic_info_frame.grid_rowconfigure((0,1,2), weight=1)
-
-        self.desc_frame = ctk.CTkFrame(self.info_frame)
-        self.desc_frame.pack(padx=20, pady=20, fill='x')
-
-        self.desc_frame.grid_columnconfigure(0, weight=1)
-        self.desc_frame.grid_rowconfigure(0, weight=1)
-
+        
         self.label = ctk.CTkLabel(self.top_frame, text='Weather App', font=('Arial', 55))
         self.label.grid(row = 0, column = 0, padx=10, pady=10)
 
@@ -99,27 +76,6 @@ class Weather_GUI:
         self.button_get_fav4 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
         self.button_get_fav4.grid(row = 2, column = 3, padx=20, pady=20)
 
-        self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_current_temp.grid(row = 0, column = 0, padx=10, pady=10, sticky='w')
-
-        self.label_current_humidity = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_current_humidity.grid(row = 0, column = 1, padx=10, pady=10, sticky='w')
-
-        self.label_current_description = ctk.CTkLabel(self.desc_frame, text="")
-        self.label_current_description.grid(row = 0, column = 0, padx = 20, pady = 10)
-
-        self.label_precip_percent = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_precip_percent.grid(row = 2, column = 0, padx=10, pady=10, sticky='w')
-
-        self.labeL_uv_index = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.labeL_uv_index.grid(row = 2, column = 1, padx=10, pady=10, sticky='w')
-
-        self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
-        self.label_umbrella_check.grid(row=0, column=0, padx=10, pady=10)
-
-        self.label_sunscreen_check = ctk.CTkLabel(self.conditional_frame, text="")
-        self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)
-
         self.root.mainloop()
 
     def show_map(self):
@@ -128,7 +84,7 @@ class Weather_GUI:
     def return_coords(self,coords):
         print("return coords triggered", coords)
         self.place = coords
-        self.get_info()
+        self.display_info_window()
 
     def return_favinfo(self, loc_key):
 
@@ -142,7 +98,7 @@ class Weather_GUI:
         self.user_selected_fav_loc = 1
 
         self.fav_place = (lat, long)
-        self.get_info()
+        self.display_info_window()
 
     def umbrella_check(self, preprob):
         msg = "Umbrella is not needed today."
@@ -172,6 +128,75 @@ class Weather_GUI:
             return weather_data
         else:
             messagebox.showerror("No Data", "Something went wrong with API\nPlease try again in a few minutes.")
+    
+    '''def window_test(self):
+        new_win = ctk.CTkToplevel(self.root)
+        new_win.title("hi")
+        new_win.geometry("250x150")
+
+        la = ctk.CTkLabel(new_win, text="hi hello").pack()'''
+
+    def display_info_window(self):
+        
+        info_window = ctk.CTkToplevel(self.root)
+        info_window.title("Info Window")
+        info_window.geometry("800x600")
+
+        self.info_frame = ctk.CTkFrame(info_window)
+        self.info_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.basic_info_frame = ctk.CTkFrame(self.info_frame, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
+        self.basic_info_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.basic_info_frame.grid_columnconfigure((0,1), weight=1)
+        self.basic_info_frame.grid_rowconfigure((0,1,2), weight=1)
+
+        self.desc_frame = ctk.CTkFrame(self.info_frame)
+        self.desc_frame.pack(padx=20, pady=20, fill='x')
+
+        self.desc_frame.grid_columnconfigure(0, weight=1)
+        self.desc_frame.grid_rowconfigure(0, weight=1)
+
+        self.conditional_frame = ctk.CTkFrame(self.root)
+        self.conditional_frame.pack(padx=20, pady=20, fill = 'x')
+
+        self.conditional_frame.grid_columnconfigure(0, weight=1)
+        self.conditional_frame.grid_rowconfigure((0,1), weight=1)
+
+        self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
+        self.label_umbrella_check.grid(row=0, column=0, padx=10, pady=10)
+
+        self.label_sunscreen_check = ctk.CTkLabel(self.conditional_frame, text="")
+        self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)
+
+
+        self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="")
+        self.label_current_dets_heading.pack(padx=10,pady=10)
+
+        self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.label_current_temp.grid(row = 0, column = 0, padx=10, pady=10, sticky='w')
+
+        self.label_current_humidity = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.label_current_humidity.grid(row = 0, column = 1, padx=10, pady=10, sticky='w')
+
+        self.label_current_description = ctk.CTkLabel(self.desc_frame, text="")
+        self.label_current_description.grid(row = 0, column = 0, padx = 20, pady = 10)
+
+        self.label_precip_percent = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.label_precip_percent.grid(row = 2, column = 0, padx=10, pady=10, sticky='w')
+
+        self.labeL_uv_index = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.labeL_uv_index.grid(row = 2, column = 1, padx=10, pady=10, sticky='w')
+
+        self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
+        self.label_umbrella_check.grid(row=0, column=0, padx=10, pady=10)
+
+        self.label_sunscreen_check = ctk.CTkLabel(self.conditional_frame, text="")
+        self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)
+
+
+        self.get_info()
+        
         
     def get_info(self):
 
@@ -186,6 +211,7 @@ class Weather_GUI:
         if not self.weather_info:
             messagebox.showerror("Error", "No Data Found.")
             return
+
 
             
         current_temp = self.weather_info['currentConditions']["temp"]
