@@ -21,13 +21,13 @@ class world_map:
         self.window.geometry('1920x1080')
 
         self.weather_map_frame = ctk.CTkFrame(self.window)
-        self.weather_map_frame.pack(side='bottom', fill='x', pady=5)
+        self.weather_map_frame.pack(padx=10, pady=10, side='bottom', fill='x')
 
         #grid configs
-        self.weather_map_frame.grid_columnconfigure(0, weight=1)
-        self.weather_map_frame.grid_rowconfigure((0,1,2), weight=1)
+        self.weather_map_frame.grid_columnconfigure((0,1,2), weight=1)
+        self.weather_map_frame.grid_rowconfigure((0,1), weight=1)
 
-        self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=15)
+        self.map_widget = tkintermapview.TkinterMapView(self.window, width=1280, height=720, corner_radius=15)
         self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
         self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
@@ -36,17 +36,19 @@ class world_map:
         self.position = None
         self.map_widget.add_left_click_map_command(self.put_marker)
         
-        self.button_fav_places = ctk.CTkButton(self.weather_map_frame, text='Select Fav Places', command=self.show_fav_place_window)
-        self.button_fav_places.grid(row = 3, column = 0, padx=20, pady=20)
 
-        self.label_find_information_button = ctk.CTkButton(self.weather_map_frame, command=self.select_pos, text="Find Information")
-        self.label_find_information_button.grid(row = 0, column = 0, padx = 10, pady = 10, sticky='')
 
-        self.label_instructions = ctk.CTkLabel(self.weather_map_frame, text='Click on the place and press the button below to find information.', font=('Arial',22))
-        self.label_instructions.grid(row = 1, column = 0, padx=10, pady=10, sticky = '')
+        self.label_find_information_button = ctk.CTkButton(self.weather_map_frame, command=self.select_pos, text="Find Information", font=('Arial', 30))
+        self.label_find_information_button.grid(row = 0, column = 0)
 
-        self.quit_button = ctk.CTkButton(self.weather_map_frame,text="Close Map", command=self.window.destroy)
-        self.quit_button.grid(row = 2, column = 0, padx=10,pady=10, sticky = '')
+        self.quit_button = ctk.CTkButton(self.weather_map_frame,text="Close Map", command=self.window.destroy, font=('Arial', 30))
+        self.quit_button.grid(row = 1, column = 1)
+
+        self.button_fav_places = ctk.CTkButton(self.weather_map_frame, text='Select Fav Places', command=self.show_fav_place_window, font=('Arial', 30))
+        self.button_fav_places.grid(row = 0, column = 1)
+
+        self.label_instructions = ctk.CTkLabel(self.weather_map_frame, text='Click on the place and press the button below to find information.', font=('Arial',45))
+        self.label_instructions.grid(row = 1, column = 0, padx=10, pady=10)
 
 
     def show_fav_place_window(self):

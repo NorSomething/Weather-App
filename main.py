@@ -25,7 +25,7 @@ class Weather_GUI:
 
         self.root = ctk.CTk()
 
-        self.root.geometry('1920x1080')
+        self.root.geometry('1600x400')
         self.root.title('WeatherApp')
 
         self.date = datetime.datetime.now()
@@ -140,7 +140,7 @@ class Weather_GUI:
         
         info_window = ctk.CTkToplevel(self.root)
         info_window.title("Info Window")
-        info_window.geometry("800x600")
+        info_window.geometry("1460x355")
 
         self.info_frame = ctk.CTkFrame(info_window)
         self.info_frame.pack(padx=20, pady=20, fill = 'x')
