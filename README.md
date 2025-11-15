@@ -1,6 +1,6 @@
 - [x] Main GUI
 - [x] Fav Location Saving
-- [ ] Multiple Windows
+- [x] Multiple Windows
 - [ ] Beautify GUI
 - [ ] Weekly Data
 - [ ] Graphs
