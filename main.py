@@ -28,6 +28,8 @@ class Weather_GUI:
         self.root.geometry('1600x400')
         self.root.title('WeatherApp')
 
+        self.info_window = None #for not creating extra windows
+
         self.date = datetime.datetime.now()
         self.current_date = str(self.date)[8:10] #might be useful when weekly data implementation
 
@@ -84,6 +86,7 @@ class Weather_GUI:
     def return_coords(self,coords):
         print("return coords triggered", coords)
         self.place = coords
+        self.user_selected_fav_loc = False
         self.display_info_window()
 
     def return_favinfo(self, loc_key):
@@ -95,7 +98,7 @@ class Weather_GUI:
             
         lat, long = cors[0], cors[1]
 
-        self.user_selected_fav_loc = 1
+        self.user_selected_fav_loc = True
 
         self.fav_place = (lat, long)
         self.display_info_window()
@@ -137,12 +140,16 @@ class Weather_GUI:
         la = ctk.CTkLabel(new_win, text="hi hello").pack()'''
 
     def display_info_window(self):
-        
-        info_window = ctk.CTkToplevel(self.root)
-        info_window.title("Info Window")
-        info_window.geometry("1460x355")
 
-        self.info_frame = ctk.CTkFrame(info_window)
+        if self.info_window is not None and self.info_window.winfo_exists():
+            self.get_info()
+            return 
+        
+        self.info_window = ctk.CTkToplevel(self.root)
+        self.info_window.title("Info Window")
+        self.info_window.geometry("1460x355")
+
+        self.info_frame = ctk.CTkFrame(self.info_window)
         self.info_frame.pack(padx=20, pady=20, fill = 'x')
 
         self.basic_info_frame = ctk.CTkFrame(self.info_frame, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
