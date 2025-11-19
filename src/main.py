@@ -23,6 +23,7 @@ class Weather_GUI:
         
         self.place = None #idk why I put it here, doesnt work without it
         self.fav_place = None
+        self.week = None
 
         self.root = ctk.CTk()
 
@@ -79,6 +80,9 @@ class Weather_GUI:
         self.button_get_fav4 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
         self.button_get_fav4.grid(row = 2, column = 3, padx=20, pady=20)
 
+        self.button_get_weekly = ctk.CTkButton(self.fav_loc_frame, text="get weekly info", command= self.get_weekly_info, font=('Arial', 30))
+        self.button_get_weekly.grid(row = 3, column = 0, padx=20, pady=20)
+
         self.root.mainloop()
 
     def show_map(self):
@@ -117,6 +121,27 @@ class Weather_GUI:
             msg = "Wear Sunscreen Before Going Out Today."
             return msg
         return msg
+
+    '''
+    main.py fetches JSON
+    main.py passes JSON into weekly_data
+    weekly_data extracts first 7 days
+    weekly window displays them'''
+
+    def get_weekly_info(self):
+
+        if self.place is None and not self.user_selected_fav_loc:
+            messagebox.showwarning("No Location", "Select a location first.")
+            return
+        
+        if self.user_selected_fav_loc:
+            week_weather = self.get_weather_data(self.fav_place)
+        else:
+            week_weather = self.get_weather_data(self.place)
+        
+        weekly_data.weekly_data(self.root, week_weather)
+
+       
 
 
     def get_weather_data(self, coor):
@@ -214,10 +239,6 @@ class Weather_GUI:
         if not self.weather_info:
             messagebox.showerror("Error", "No Data Found.")
             return
-
-        #for weekly stuff:
-        self.week = weekly_data.extract_weekly_data(self.weather_info) #calls the func in weekly_data.py
-        print(self.week)
 
             
         current_temp = self.weather_info['currentConditions']["temp"]
