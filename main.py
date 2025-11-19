@@ -11,6 +11,7 @@ import json
 
 import world_map
 import fav_place
+import weekly_data
 
 load_dotenv()
 
@@ -132,12 +133,7 @@ class Weather_GUI:
         else:
             messagebox.showerror("No Data", "Something went wrong with API\nPlease try again in a few minutes.")
     
-    '''def window_test(self):
-        new_win = ctk.CTkToplevel(self.root)
-        new_win.title("hi")
-        new_win.geometry("250x150")
 
-        la = ctk.CTkLabel(new_win, text="hi hello").pack()'''
 
     def display_info_window(self):
 
@@ -219,6 +215,9 @@ class Weather_GUI:
             messagebox.showerror("Error", "No Data Found.")
             return
 
+        #for weekly stuff:
+        self.week = weekly_data.extract_weekly_data(self.weather_info) #calls the func in weekly_data.py
+        print(self.week)
 
             
         current_temp = self.weather_info['currentConditions']["temp"]

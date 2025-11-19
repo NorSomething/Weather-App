@@ -12,6 +12,7 @@ import json
 class select_fav_places:
 
     def __init__(self, parent, callback):
+        
 
         self.callback = callback
 
