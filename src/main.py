@@ -139,6 +139,9 @@ class Weather_GUI:
         else:
             week_weather = self.get_weather_data(self.place)
         
+        #week_weather is the whole dict 
+
+
         weekly_data.weekly_data(self.root, week_weather)
 
        
