@@ -34,40 +34,58 @@ class weekly_data:
         
         
 
-        for i in range(7):
+        for i in range(8):
 
-            day_date = week[i].get('datetime')
+            day_date = week[i+1].get('datetime')
 
-            min_temp = week[i].get('tempmin')
-            max_temp = week[i].get('tempmax')
-            humidity = week[i].get('humidity')
-            precip = week[i].get('precip')
-            condition = week[i].get('conditions')
-            description = week[i].get('description')
+            min_temp = week[i+1].get('tempmin')
+            max_temp = week[i+1].get('tempmax')
+            humidity = week[i+1].get('humidity')
+            precip = week[i+1].get('precip')
+            condition = week[i+1].get('conditions')
+            description = week[i+1].get('description')
+
+            self.label_label_mintemp = ctk.CTkLabel(self.weekly_data_frame, text="Minimum Temperature", wraplength=200, justify='center',font=('Arial', 30))
+            self.label_label_mintemp.grid(row = 1, column = 0, padx=20, pady=20)
+
+            self.label_label_maxtemp = ctk.CTkLabel(self.weekly_data_frame, text="Maximum Temperature", wraplength=200, justify='center', font=('Arial', 30))
+            self.label_label_maxtemp.grid(row = 2, column = 0, padx=20, pady=20)
+
+            self.label_label_humidity = ctk.CTkLabel(self.weekly_data_frame, text="Humidity", wraplength=200, justify='center', font=('Arial', 30))
+            self.label_label_humidity.grid(row = 3, column = 0, padx=20, pady=20)
+
+            self.label_label_precip = ctk.CTkLabel(self.weekly_data_frame, text="Precipitation", wraplength=200, justify='center', font=('Arial', 30))
+            self.label_label_precip.grid(row = 4, column = 0, padx=20, pady=20)
+
+            self.label_label_cond = ctk.CTkLabel(self.weekly_data_frame, text="Condition", wraplength=200, justify='center', font=('Arial', 30))
+            self.label_label_cond.grid(row = 5, column = 0, padx=20, pady=20)
+
+            self.label_label_desc = ctk.CTkLabel(self.weekly_data_frame, text="Descrption", wraplength=200, justify='center', font=('Arial', 30))
+            self.label_label_desc.grid(row = 6, column = 0, padx=20, pady=20)
 
             self.label_day_date = ctk.CTkLabel(self.weekly_data_frame, text=day_date, font=('Arial', 30))
-            self.label_day_date.grid(row = 0, column = i, padx=20, pady=20)
+            self.label_day_date.grid(row = 0, column = i+1, padx=20, pady=20)
 
             self.label_min_temp = ctk.CTkLabel(self.weekly_data_frame, text=min_temp, font=('Arial', 30))
-            self.label_min_temp.grid(row = 1, column = i, padx = 20, pady = 20)
+            self.label_min_temp.grid(row = 1, column = i+1, padx = 20, pady = 20)
 
             self.label_max_temp = ctk.CTkLabel(self.weekly_data_frame, text=max_temp, font=('Arial', 30))
-            self.label_max_temp.grid(row = 2, column = i, padx=20, pady=20)
+            self.label_max_temp.grid(row = 2, column = i+1, padx=20, pady=20)
 
             self.label_humidity = ctk.CTkLabel(self.weekly_data_frame, text=humidity, font=('Arial', 30))
-            self.label_humidity.grid(row = 3, column = i, padx=20, pady=20)
+            self.label_humidity.grid(row = 3, column = i+1, padx=20, pady=20)
 
             self.label_precip = ctk.CTkLabel(self.weekly_data_frame, text=precip, font=('Arial', 30))
-            self.label_precip.grid(row = 4, column = i, padx=20, pady=20)
+            self.label_precip.grid(row = 4, column = i+1, padx=20, pady=20)
 
             self.label_condition = ctk.CTkLabel(self.weekly_data_frame, text=condition, wraplength=200, justify='center', font=('Arial', 30))
-            self.label_condition.grid(row = 5, column = i, padx=20, pady=20)
+            self.label_condition.grid(row = 5, column = i+1, padx=20, pady=20)
 
             self.label_desc = ctk.CTkLabel(self.weekly_data_frame, text=description, wraplength=200, justify='center', font=('Arial', 30))
-            self.label_desc.grid(row = 6, column = i, padx=20, pady=20)
+            self.label_desc.grid(row = 6, column = i+1, padx=20, pady=20)
         
     
     def extract_weekly_data(self):
-        return self.weekly_data_json["days"][:7] #this is a list??
+        return self.weekly_data_json["days"][:8] #this is a list??
         #first seven days from main.py
 
