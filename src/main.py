@@ -55,10 +55,6 @@ class Weather_GUI:
 
         self.fav_loc_frame.grid_columnconfigure((0,1,2,3), weight=1)
         self.fav_loc_frame.grid_rowconfigure((0,1,2,3), weight=1)
-
-        #self.week_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
-        #self.week_frame.pack(padx=20, pady=20, fill = 'x')
-
         
         self.label = ctk.CTkLabel(self.top_frame, text='Weather App', font=('Arial', 55))
         self.label.grid(row = 0, column = 0, padx=10, pady=10)
