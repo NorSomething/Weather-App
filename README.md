@@ -2,5 +2,5 @@
 - [x] Fav Location Saving
 - [x] Multiple Windows
 - [ ] Beautify GUI
-- [ ] Weekly Data
+- [X] Weekly Data
 - [ ] Graphs

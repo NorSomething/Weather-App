@@ -1,3 +1,5 @@
 .env
 weatherData.txt
-__pycache_
+__pycache__
+weeklydata.json
+
