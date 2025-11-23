@@ -4,3 +4,6 @@
 - [ ] Beautify GUI
 - [X] Weekly Data
 - [ ] Graphs
+- [ ] Sunrise Moonphase
+- [ ] AQI
+- [ ] Loading Spinner
