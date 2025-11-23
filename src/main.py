@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 import json
 import threading
 
+
 import world_map
 import fav_place
 import weekly_data
@@ -77,8 +78,8 @@ class Weather_GUI:
         self.button_get_fav4 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
         self.button_get_fav4.grid(row = 2, column = 3, padx=20, pady=20)
 
-        self.button_get_weekly = ctk.CTkButton(self.fav_loc_frame, text="get weekly info", command= self.get_weekly_info, font=('Arial', 30))
-        self.button_get_weekly.grid(row = 3, column = 0, padx=20, pady=20)
+        self.button_get_weekly = ctk.CTkButton(self.root, text="Get Weekly Info", command= self.get_weekly_info, font=('Arial', 30))
+        self.button_get_weekly.pack(padx=20, pady=20)
 
         self.root.mainloop()
 
@@ -175,7 +176,7 @@ class Weather_GUI:
 
     def open_weekly_window(self, week_weather):
         self.hide_weekly_loading()
-        weekly_data.weekly_data(self.root, week_weather)
+        weekly_data.weekly_data(self.root, week_weather) #calls the weekly window from weekly_data.py
 
 
     def get_weather_data(self, coor):

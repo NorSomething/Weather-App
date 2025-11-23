@@ -1,6 +1,9 @@
 import customtkinter as ctk
 import tkinter
 from tkinter import messagebox
+import matplotlib 
+
+import weekly_data_stats
 
 class weekly_data:
 
@@ -31,7 +34,8 @@ class weekly_data:
         self.label_weekly_heading = ctk.CTkLabel(self.weekly_heading_frame, text="Weather for the next seven days", font=('Arial', 45))
         self.label_weekly_heading.grid(row=0, column=0, padx=20, pady=20)
 
-        
+        self.button_get_weekly_graphs = ctk.CTkButton(self.weekly_heading_frame, text="Get Statistical Data", command=self.open_weeky_stats_window, font=('Arial', 30))
+        self.button_get_weekly_graphs.grid(row=1, column=0, padx=20, pady=20)
         
 
         for i in range(8):
@@ -89,3 +93,8 @@ class weekly_data:
         return self.weekly_data_json["days"][:8] #this is a list??
         #first seven days from main.py
 
+    def give_json(self):
+        return self.weekly_data_json
+
+    def open_weeky_stats_window(self):
+        weekly_data_stats.weekly_stats(self.weekly_data_window, self.give_json) 
