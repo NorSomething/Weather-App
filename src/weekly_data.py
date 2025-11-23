@@ -2,6 +2,7 @@ import customtkinter as ctk
 import tkinter
 from tkinter import messagebox
 import matplotlib 
+import numpy as np
 
 import weekly_data_stats
 
@@ -37,6 +38,9 @@ class weekly_data:
         self.button_get_weekly_graphs = ctk.CTkButton(self.weekly_heading_frame, text="Get Statistical Data", command=self.open_weeky_stats_window, font=('Arial', 30))
         self.button_get_weekly_graphs.grid(row=1, column=0, padx=20, pady=20)
         
+        self.days = []
+        self.min_temp_array = []
+
 
         for i in range(8):
 
@@ -48,6 +52,9 @@ class weekly_data:
             precip = week[i+1].get('precip')
             condition = week[i+1].get('conditions')
             description = week[i+1].get('description')
+
+            self.min_temp_array.append(min_temp)
+            self.days.append(day_date)
 
             self.label_label_mintemp = ctk.CTkLabel(self.weekly_data_frame, text="Minimum Temperature", wraplength=200, justify='center',font=('Arial', 30))
             self.label_label_mintemp.grid(row = 1, column = 0, padx=20, pady=20)
@@ -97,4 +104,7 @@ class weekly_data:
         return self.weekly_data_json
 
     def open_weeky_stats_window(self):
-        weekly_data_stats.weekly_stats(self.weekly_data_window, self.give_json) 
+        data_list = []
+        data_list.append(self.days)
+        data_list.append(self.min_temp_array)
+        weekly_data_stats.weekly_stats(self.weekly_data_window, self.give_json, data_list) 

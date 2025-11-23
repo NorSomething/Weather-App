@@ -6,4 +6,5 @@
 - [ ] Graphs
 - [ ] Sunrise Moonphase
 - [ ] AQI
-- [ ] Loading Spinner
+- [X] Loading Spinner
+- [ ] UX Improvements
