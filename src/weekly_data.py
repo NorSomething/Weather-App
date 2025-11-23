@@ -84,7 +84,7 @@ class weekly_data:
             self.label_desc = ctk.CTkLabel(self.weekly_data_frame, text=description, wraplength=200, justify='center', font=('Arial', 30))
             self.label_desc.grid(row = 6, column = i+1, padx=20, pady=20)
         
-    
+        
     def extract_weekly_data(self):
         return self.weekly_data_json["days"][:8] #this is a list??
         #first seven days from main.py

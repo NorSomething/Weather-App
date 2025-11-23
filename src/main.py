@@ -8,6 +8,7 @@ from tkinter import messagebox
 from tkinter import PhotoImage
 from dotenv import load_dotenv
 import json
+import threading
 
 import world_map
 import fav_place
@@ -81,6 +82,27 @@ class Weather_GUI:
 
         self.root.mainloop()
 
+    def show_loading(self):
+        self.loading_bar = ctk.CTkProgressBar(self.info_window, mode='indeterminant')
+        self.loading_bar.pack(padx=10, pady=10)
+        self.loading_bar.start()
+
+    def hide_loading(self):
+        if hasattr(self, 'loading_bar'): #if bar is still on screen
+            self.loading_bar.stop()
+            self.loading_bar.destroy()
+
+    def show_weekly_loading(self):
+        self.weekly_loading = ctk.CTkProgressBar(self.root, mode='indeterminate')
+        self.weekly_loading.pack(pady=10)
+        self.weekly_loading.start()
+
+    def hide_weekly_loading(self):
+        if hasattr(self, 'weekly_loading'):
+            self.weekly_loading.stop()
+            self.weekly_loading.destroy()
+
+
     def show_map(self):
         world_map.world_map(self.root, self.return_coords)
 
@@ -134,17 +156,26 @@ class Weather_GUI:
             messagebox.showwarning("No Location", "Select a location first.")
             return
         
+        
+        
+        #week_weather is the whole dict 
+
+        self.show_weekly_loading()
+        threading.Thread(target=self.fetch_weekly_thread, daemon=True).start() #if user closes while loading, the loading will take place in backgroud, to avoid that daemon?
+
+    def fetch_weekly_thread(self):
+        
         if self.user_selected_fav_loc:
             week_weather = self.get_weather_data(self.fav_place)
         else:
             week_weather = self.get_weather_data(self.place)
-        
-        #week_weather is the whole dict 
 
+        #update gui
+        self.root.after(0, lambda: self.open_weekly_window(week_weather))
 
+    def open_weekly_window(self, week_weather):
+        self.hide_weekly_loading()
         weekly_data.weekly_data(self.root, week_weather)
-
-       
 
 
     def get_weather_data(self, coor):
@@ -226,7 +257,15 @@ class Weather_GUI:
         self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)
 
 
+        #self.get_info()
+
+        #loading bar
+        self.show_loading()
+        threading.Thread(target=self.load_weather_thread_info_window, daemon=True).start()
+
+    def load_weather_thread_info_window(self):
         self.get_info()
+        self.info_window.after(0, self.hide_loading) #just self.hide_loading() is unsafe => called inside background thread
         
         
     def get_info(self):
@@ -267,7 +306,8 @@ class Weather_GUI:
 
 
 
-Weather_GUI()
+if __name__ == '__main__':
+    Weather_GUI()
 
 
     
