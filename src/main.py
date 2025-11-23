@@ -27,7 +27,7 @@ class Weather_GUI:
 
         self.root = ctk.CTk()
 
-        self.root.geometry('1600x400')
+        self.root.geometry('1920x1080')
         self.root.title('WeatherApp')
 
         self.info_window = None #for not creating extra windows
@@ -105,6 +105,8 @@ class Weather_GUI:
         self.display_info_window()
 
     def umbrella_check(self, preprob):
+        if preprob is None:
+            return "Rain Probability Not Available."
         msg = "Umbrella is not needed today."
         if preprob >= 45:
             msg = "An Umbrella Would Come in Handy Today."
@@ -112,6 +114,8 @@ class Weather_GUI:
         return msg
     
     def sunscreen_check(self, uvindex):
+        if uvindex is None:
+            return "UV Index Not Available"
         msg = "Sunscreen is not needed today."
         if uvindex >= 3:
             msg = "Wear Sunscreen Before Going Out Today."
@@ -167,7 +171,7 @@ class Weather_GUI:
         
         self.info_window = ctk.CTkToplevel(self.root)
         self.info_window.title("Info Window")
-        self.info_window.geometry("1460x355")
+        self.info_window.geometry("1460x900")
 
         self.info_frame = ctk.CTkFrame(self.info_window)
         self.info_frame.pack(padx=20, pady=20, fill = 'x')
@@ -184,17 +188,17 @@ class Weather_GUI:
         self.desc_frame.grid_columnconfigure(0, weight=1)
         self.desc_frame.grid_rowconfigure(0, weight=1)
 
-        self.conditional_frame = ctk.CTkFrame(self.root)
+        self.conditional_frame = ctk.CTkFrame(self.info_frame)
         self.conditional_frame.pack(padx=20, pady=20, fill = 'x')
 
         self.conditional_frame.grid_columnconfigure(0, weight=1)
         self.conditional_frame.grid_rowconfigure((0,1), weight=1)
 
-        self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
+        '''self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
         self.label_umbrella_check.grid(row=0, column=0, padx=10, pady=10)
 
         self.label_sunscreen_check = ctk.CTkLabel(self.conditional_frame, text="")
-        self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)
+        self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)'''
 
 
         self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="")
@@ -245,19 +249,20 @@ class Weather_GUI:
         current_humidity = self.weather_info['currentConditions']['humidity']
 
         current_description = self.weather_info['description']
-
+        
         current_uv_index = self.weather_info['currentConditions']['uvindex']
 
-        current_precp_percent = self.weather_info['currentConditions']['precipprob']
+        current_precip_percent = self.weather_info['currentConditions']['precipprob']
+
 
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
         self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 30))
         self.label_current_humidity.configure(text=f"Current Humidity is : {current_humidity} percent.", font=('Arial', 30))
         self.label_current_description.configure(text=current_description, font=('Arial', 30))
-        self.label_precip_percent.configure(text=f"Current Chance of Rain is : {current_precp_percent} percent.", font=('Arial', 30))
+        self.label_precip_percent.configure(text=f"Current Chance of Rain is : {current_precip_percent} percent.", font=('Arial', 30))
         self.labeL_uv_index.configure(text=f"Current UV Index is : {current_uv_index}.", font=('Arial', 30))
-        self.label_umbrella_check.configure(text=self.umbrella_check(current_precp_percent), font=('Arial', 30))
+        self.label_umbrella_check.configure(text=self.umbrella_check(current_precip_percent), font=('Arial', 30))
         self.label_sunscreen_check.configure(text=self.sunscreen_check(current_uv_index), font=('Arial', 30))
 
 
