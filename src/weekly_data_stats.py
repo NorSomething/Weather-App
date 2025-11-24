@@ -15,15 +15,37 @@ class weekly_stats:
         self.weekly_stats_window.title("Statistics Window")
         self.weekly_stats_window.geometry('1920x1080')
 
-        print("Min Temperature List : ",self.data_list[1])
+        self.weekly_buttons_frame = ctk.CTkFrame(self.weekly_stats_window)
+        self.weekly_buttons_frame.pack(padx = 20, pady=20, fill='x')
 
-        self.button_test = ctk.CTkButton(self.weekly_stats_window, text='test', command=self.get_graph, font=('Arial', 30))
-        self.button_test.pack(padx=20, pady=20)
+        self.weekly_buttons_frame.columnconfigure((0,1,2,3), weight=1)
+        self.weekly_buttons_frame.rowconfigure(0, weight=1)
 
-    def get_graph(self):
-        xpoints = np.array(self.data_list[0])
-        ypoints = np.array(self.data_list[1])
-        plt.plot(xpoints, ypoints)
+        self.dates = np.array(self.data_list[0])    
+        self.min_temp = np.array(self.data_list[1])
+        self.max_temp = np.array(self.data_list[2])
+        self.humidity = np.array(self.data_list[3])
+        self.precip = np.array(self.data_list[4])
+
+        self.button_min_temp_graph = ctk.CTkButton(self.weekly_buttons_frame, text="Get MinTemp Graph", command= lambda: self.get_graph(self.min_temp, "Minimum Temperate Variation in the following week.","Temperature in C"), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_min_temp_graph.grid(row = 0, column = 1, padx = 20, pady=20)
+
+    def get_graph(self, ycoords, title, ylabel):
+
+        width_px = 1280
+        height_px = 720
+        dpi = 100
+        
+        ypoints = np.array(ycoords)
+        plt.figure(figsize=(width_px/dpi, height_px/dpi), dpi=dpi)
+        plt.plot(self.dates, ypoints)
+
+        plt.xlabel("Dates")
+        plt.ylabel(ylabel)
+        plt.title(title)
+
+        plt.grid()
         plt.show()
+
 
         

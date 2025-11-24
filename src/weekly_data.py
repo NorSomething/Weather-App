@@ -40,6 +40,9 @@ class weekly_data:
         
         self.days = []
         self.min_temp_array = []
+        self.max_temp_array = []
+        self.humidity_array = []
+        self.precip_array = []
 
 
         for i in range(8):
@@ -53,8 +56,13 @@ class weekly_data:
             condition = week[i+1].get('conditions')
             description = week[i+1].get('description')
 
-            self.min_temp_array.append(min_temp)
             self.days.append(day_date)
+            self.min_temp_array.append(min_temp)
+            self.max_temp_array.append(max_temp)
+            self.humidity_array.append(humidity)
+            self.precip_array.append(precip)
+
+            
 
             self.label_label_mintemp = ctk.CTkLabel(self.weekly_data_frame, text="Minimum Temperature", wraplength=200, justify='center',font=('Arial', 30))
             self.label_label_mintemp.grid(row = 1, column = 0, padx=20, pady=20)
@@ -107,4 +115,7 @@ class weekly_data:
         data_list = []
         data_list.append(self.days)
         data_list.append(self.min_temp_array)
+        data_list.append(self.max_temp_array)
+        data_list.append(self.humidity_array)
+        data_list.append(self.precip_array)
         weekly_data_stats.weekly_stats(self.weekly_data_window, self.give_json, data_list) 

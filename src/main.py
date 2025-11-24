@@ -23,7 +23,7 @@ class Weather_GUI:
 
         self.API_KEY = os.getenv('API_KEY')
         
-        self.place = None #idk why I put it here, doesnt work without it
+        self.place = None 
         self.fav_place = None
         self.week = None
 
@@ -35,7 +35,6 @@ class Weather_GUI:
         self.info_window = None #for not creating extra windows
 
         self.date = datetime.datetime.now()
-        self.current_date = str(self.date)[8:10] #might be useful when weekly data implementation
 
         self.user_selected_fav_loc = 0
 
@@ -309,11 +308,3 @@ class Weather_GUI:
 
 if __name__ == '__main__':
     Weather_GUI()
-
-
-    
-
-
-
-
-
