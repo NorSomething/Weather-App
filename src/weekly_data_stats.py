@@ -26,6 +26,8 @@ class weekly_stats:
         self.max_temp = np.array(self.data_list[2])
         self.humidity = np.array(self.data_list[3])
         self.precip = np.array(self.data_list[4])
+        self.sunrise = np.array(self.data_list[5])
+        self.sunset = np.array(self.data_list[6])
 
         self.button_min_temp_graph = ctk.CTkButton(self.weekly_buttons_frame, text="Get MinTemp Graph", command= lambda: self.get_graph(self.min_temp, "Minimum Temperate Variation in the following week.","Temperature in C"), font=('Arial', 30)) #lamba here as you cant give arg here
         self.button_min_temp_graph.grid(row = 0, column = 0, padx = 20, pady=20)
@@ -38,6 +40,12 @@ class weekly_stats:
 
         self.button_precip = ctk.CTkButton(self.weekly_buttons_frame, text="Get Precip Graph", command= lambda: self.get_graph(self.precip, "Precipitation Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
         self.button_precip.grid(row = 0, column = 3, padx = 20, pady=20)
+
+        self.button_sunrise = ctk.CTkButton(self.weekly_buttons_frame, text="Get Sunrise Graph", command= lambda: self.get_graph(self.sunrise, "Sunrise Time Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_sunrise.grid(row = 0, column = 4, padx = 20, pady=20)
+
+        self.button_precip = ctk.CTkButton(self.weekly_buttons_frame, text="Get Sunset Graph", command= lambda: self.get_graph(self.sunset, "Sunset Time Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_precip.grid(row = 0, column = 5, padx = 20, pady=20)
         
 
     def get_graph(self, ycoords, title, ylabel):
