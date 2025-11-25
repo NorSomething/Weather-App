@@ -2,8 +2,8 @@
 - [x] Fav Location Saving
 - [x] Multiple Windows
 - [ ] Beautify GUI
-- [X] Weekly Data
-- [ ] Graphs
+- [x] Weekly Data
+- [x] Graphs
 - [ ] Sunrise Moonphase
 - [ ] AQI
 - [X] Loading Spinner

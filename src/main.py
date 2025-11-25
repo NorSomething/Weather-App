@@ -256,6 +256,11 @@ class Weather_GUI:
         self.label_sunscreen_check = ctk.CTkLabel(self.conditional_frame, text="")
         self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)
 
+        self.label_sunrise_time = ctk.CTkLabel(self.basic_info_frame, text="")
+        self.label_sunrise_time.grid(row = 3, column =  0, padx=20, pady=20)
+
+        self.label_sunset_time =  ctk.CTkLabel(self.basic_info_frame, text="")
+        self.label_sunset_time.grid(row = 3, column = 1, padx=0, pady=0)
 
         #self.get_info()
 
@@ -272,6 +277,8 @@ class Weather_GUI:
 
         print("get info() triggered", self.place)
         print("date time is ", self.date)
+
+        
         
         if self.user_selected_fav_loc:
             self.weather_info = self.get_weather_data(self.fav_place)
@@ -293,6 +300,8 @@ class Weather_GUI:
 
         current_precip_percent = self.weather_info['currentConditions']['precipprob']
 
+        sunrise_time = self.weather_info['days'][0].get("sunrise", 0)
+        sunset_time = self.weather_info['days'][0].get("sunset", 0)
 
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
@@ -303,6 +312,8 @@ class Weather_GUI:
         self.labeL_uv_index.configure(text=f"Current UV Index is : {current_uv_index}.", font=('Arial', 30))
         self.label_umbrella_check.configure(text=self.umbrella_check(current_precip_percent), font=('Arial', 30))
         self.label_sunscreen_check.configure(text=self.sunscreen_check(current_uv_index), font=('Arial', 30))
+        self.label_sunrise_time.configure(text=f"Sunrise Time : {sunrise_time}", font=('Arial', 30))
+        self.label_sunset_time.configure(text=f"Sunset Time : {sunset_time}", font=('Arial', 30))
 
 
 
