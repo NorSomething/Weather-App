@@ -38,6 +38,8 @@ class Weather_GUI:
 
         self.user_selected_fav_loc = 0
 
+        self.city_entered_check = False
+
         #Top Frame --> Title, Open Map Button, Show Information Button
         #Week Frame --> Days of the week
         #Info Frame --> Grid : each cell has one information
@@ -48,8 +50,8 @@ class Weather_GUI:
         self.top_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
         self.top_frame.pack(padx=20, pady=20, fill = 'x')
 
-        self.top_frame.grid_columnconfigure((0), weight=1)
-        self.top_frame.grid_rowconfigure((0), weight=1)
+        self.top_frame.grid_columnconfigure((0,1,2), weight=1)
+        self.top_frame.grid_rowconfigure((0,1,2), weight=1)
         
         self.fav_loc_frame = ctk.CTkFrame(self.root)
         self.fav_loc_frame.pack(padx=20, pady=20, fill = 'x') 
@@ -64,6 +66,12 @@ class Weather_GUI:
 
         self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
         self.button_map.grid(row = 1, column=0, padx=20, pady=20)
+
+        self.text_box_city = ctk.CTkTextbox(self.top_frame, height=10, width=300, font=('Arial', 30))
+        self.text_box_city.grid(row=1, column = 2, padx=20, pady=20)
+
+        self.buttonn_get_city_info = ctk.CTkButton(self.top_frame, text="Get Weather Info of City : ", command=self.city_button_clicked, font=('Arial', 30))
+        self.buttonn_get_city_info.grid(row=1, column=1, padx=20, pady=20)
 
         self.button_get_fav1 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 1', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30))
         self.button_get_fav1.grid(row = 2, column = 0, padx=20, pady=20)
@@ -192,7 +200,34 @@ class Weather_GUI:
         else:
             messagebox.showerror("No Data", "Something went wrong with API\nPlease try again in a few minutes.")
     
+    def get_weather_data_city(self, city):
 
+        self.city_entered_check = True
+
+        #visual crossing api -> with weekly stuff
+        url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{city}?unitGroup=metric&key={self.API_KEY}"
+
+        response = requests.get(url)
+        if response.status_code == 200:
+            weather_data = response.json()
+            return weather_data
+        else:
+            messagebox.showerror("No Data", "Something went wrong with API\nPlease try again in a few minutes.")
+
+    def city_button_clicked(self):
+        
+        city = self.text_box_city.get("1.0", "end").strip().lower()
+
+        if city == "":
+            messagebox.showwarning("Empty City", "Please enter a city name.")
+            return
+
+        self.city_entered_check = True
+        self.user_selected_fav_loc = False
+        self.place = None  #map thing
+
+        
+        self.display_info_window()
 
     def display_info_window(self):
 
@@ -262,7 +297,22 @@ class Weather_GUI:
         self.label_sunset_time =  ctk.CTkLabel(self.basic_info_frame, text="")
         self.label_sunset_time.grid(row = 3, column = 1, padx=0, pady=0)
 
-        #self.get_info()
+        ''' moon references : 
+        0–0.24 → New → Waxing Crescent
+
+        0.25 → First Quarter
+
+        0.26–0.49 → Waxing Gibbous
+
+        0.5 → Full Moon
+
+        0.51–0.74 → Waning Gibbous
+
+        0.75 → Last Quarter
+
+        0.76–0.99 → Waning Crescent'''
+
+        
 
         #loading bar
         self.show_loading()
@@ -280,8 +330,16 @@ class Weather_GUI:
 
         
         
-        if self.user_selected_fav_loc:
+            
+        if self.city_entered_check:
+            city = self.text_box_city.get("1.0", "end").strip().lower()
+            self.weather_info = self.get_weather_data_city(city)
+            
+        
+        
+        elif self.user_selected_fav_loc:
             self.weather_info = self.get_weather_data(self.fav_place)
+        
         else:
             self.weather_info = self.get_weather_data(self.place)
 
