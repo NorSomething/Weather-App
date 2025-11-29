@@ -202,7 +202,7 @@ class Weather_GUI:
     
     def get_weather_data_city(self, city):
 
-        self.city_entered_check = True
+        #self.city_entered_check = True
 
         #visual crossing api -> with weekly stuff
         url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{city}?unitGroup=metric&key={self.API_KEY}"
@@ -259,13 +259,6 @@ class Weather_GUI:
 
         self.conditional_frame.grid_columnconfigure(0, weight=1)
         self.conditional_frame.grid_rowconfigure((0,1), weight=1)
-
-        '''self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
-        self.label_umbrella_check.grid(row=0, column=0, padx=10, pady=10)
-
-        self.label_sunscreen_check = ctk.CTkLabel(self.conditional_frame, text="")
-        self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)'''
-
 
         self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="")
         self.label_current_dets_heading.pack(padx=10,pady=10)
@@ -334,6 +327,7 @@ class Weather_GUI:
         if self.city_entered_check:
             city = self.text_box_city.get("1.0", "end").strip().lower()
             self.weather_info = self.get_weather_data_city(city)
+            self.city_entered_check = False
             
         
         
