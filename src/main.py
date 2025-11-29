@@ -9,6 +9,7 @@ from tkinter import PhotoImage
 from dotenv import load_dotenv
 import json
 import threading
+from geopy.geocoders import Nominatim
 
 
 import world_map
@@ -73,22 +74,43 @@ class Weather_GUI:
         self.buttonn_get_city_info = ctk.CTkButton(self.top_frame, text="Get Weather Info of City : ", command=self.city_button_clicked, font=('Arial', 30))
         self.buttonn_get_city_info.grid(row=1, column=1, padx=20, pady=20)
 
-        self.button_get_fav1 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 1', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30))
+        #for fav places:
+        self.geolocator = Nominatim(user_agent="my_geopy_app") #api intialisation
+
+        with open('fav_places.json', 'r') as f:
+            data = json.load(f)
+
+        onel1, onel2 = data['fav_place1'][0], data['fav_place1'][1]
+        twol1, twol2 = data['fav_place2'][0], data['fav_place2'][1]
+        threel1, threel2 = data['fav_place3'][0], data['fav_place3'][1]
+        fourl1, fourl2 = data['fav_place4'][0], data['fav_place4'][1]
+
+        
+        
+
+        self.button_get_fav1 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc : {self.get_loc_from_lat_long(onel1, onel2)}', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30))
         self.button_get_fav1.grid(row = 2, column = 0, padx=20, pady=20)
 
-        self.button_get_fav2 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 2', command= lambda : self.return_favinfo('fav_place2'), font=('Arial', 30))
+        self.button_get_fav2 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(twol1, twol2)}', command= lambda : self.return_favinfo('fav_place2'), font=('Arial', 30))
         self.button_get_fav2.grid(row = 2, column = 1, padx=20, pady=20)
 
-        self.button_get_fav3 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 3', command= lambda : self.return_favinfo('fav_place3'), font=('Arial', 30))
+        self.button_get_fav3 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(threel1, threel2)}', command= lambda : self.return_favinfo('fav_place3'), font=('Arial', 30))
         self.button_get_fav3.grid(row = 2, column = 2, padx=20, pady=20)
 
-        self.button_get_fav4 = ctk.CTkButton(self.fav_loc_frame, text='Get Info of Fav Loc 4', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
+        self.button_get_fav4 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(fourl1, fourl2)}', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
         self.button_get_fav4.grid(row = 2, column = 3, padx=20, pady=20)
 
         self.button_get_weekly = ctk.CTkButton(self.root, text="Get Weekly Info", command= self.get_weekly_info, font=('Arial', 30))
         self.button_get_weekly.pack(padx=20, pady=20)
 
         self.root.mainloop()
+
+    def get_loc_from_lat_long(self, Latitude, Longitude):
+        location = self.geolocator.reverse(str(Latitude)+","+str(Longitude))
+        address = location.raw['address']
+        
+        return address.get('city', '')
+        
 
     def show_loading(self):
         self.loading_bar = ctk.CTkProgressBar(self.info_window, mode='indeterminant')

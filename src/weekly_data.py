@@ -90,9 +90,6 @@ class weekly_data:
             self.label_label_cond = ctk.CTkLabel(self.weekly_data_frame, text="Condition", wraplength=200, justify='center', font=('Arial', 30))
             self.label_label_cond.grid(row = 7, column = 0, padx=20, pady=20)
 
-            self.label_label_desc = ctk.CTkLabel(self.weekly_data_frame, text="Descrption", wraplength=200, justify='center', font=('Arial', 30))
-            self.label_label_desc.grid(row = 8, column = 0, padx=20, pady=20)
-
             self.label_day_date = ctk.CTkLabel(self.weekly_data_frame, text=day_date, font=('Arial', 30))
             self.label_day_date.grid(row = 0, column = i+1, padx=20, pady=20)
 
@@ -117,8 +114,6 @@ class weekly_data:
             self.label_condition = ctk.CTkLabel(self.weekly_data_frame, text=condition, wraplength=200, justify='center', font=('Arial', 30))
             self.label_condition.grid(row = 7, column = i+1, padx=20, pady=20)
 
-            self.label_desc = ctk.CTkLabel(self.weekly_data_frame, text=description, wraplength=200, justify='center', font=('Arial', 30))
-            self.label_desc.grid(row = 8, column = i+1, padx=20, pady=20)
         
         
     def extract_weekly_data(self):
