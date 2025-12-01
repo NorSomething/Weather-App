@@ -33,6 +33,7 @@ class Weather_GUI:
         self.root.geometry('1920x1080')
         self.root.title('WeatherApp')
 
+
         self.info_window = None #for not creating extra windows
 
         self.date = datetime.datetime.now()
@@ -265,7 +266,14 @@ class Weather_GUI:
 
         self.city_entered_check = True
         self.user_selected_fav_loc = False
-        self.place = None  #map thing
+        
+        location = self.geolocator.geocode(city)
+        coords = (location.latitude, location.longitude)
+
+        if coords == None:
+            messagebox.showerror("Error", "City not found, Try again.")
+
+        self.place = coords
 
         
         self.display_info_window()
@@ -362,16 +370,12 @@ class Weather_GUI:
         print("get info() triggered", self.place)
         print("date time is ", self.date)
 
-        
-        
             
         if self.city_entered_check:
             city = self.text_box_city.get("1.0", "end").strip().lower()
             self.weather_info = self.get_weather_data_city(city)
             self.city_entered_check = False
-            
-        
-        
+
         elif self.user_selected_fav_loc:
             self.weather_info = self.get_weather_data(self.fav_place)
         
