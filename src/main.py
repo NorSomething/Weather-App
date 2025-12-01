@@ -104,12 +104,15 @@ class Weather_GUI:
         self.button_get_weekly = ctk.CTkButton(self.root, text="Get Weekly Info", command= self.get_weekly_info, font=('Arial', 30))
         self.button_get_weekly.pack(padx=20, pady=20)
 
-        self.button_refresh_window = ctk.CTkButton(self.root, text="Refresh Window", command=self.refresh_fav_loc_buttons, font=('Arial', 30))
+        self.button_refresh_window = ctk.CTkButton(self.root, text="Refresh Window", command=self.refresh_windows, font=('Arial', 30))
         self.button_refresh_window.pack(padx=20, pady=20)
+
+        self.label_current_selected_location = ctk.CTkLabel(self.root, text="", font=('Arial', 30))
+        self.label_current_selected_location.pack(padx = 20, pady=20)
 
         self.root.mainloop()
 
-    def refresh_fav_loc_buttons(self):
+    def refresh_windows(self):
         with open('fav_places.json', 'r') as f:
             data = json.load(f)
 
@@ -123,6 +126,10 @@ class Weather_GUI:
         self.button_get_fav2.configure(text=f'Get Info of Fav Loc : {self.get_loc_from_lat_long(twol1, twol2)}')
         self.button_get_fav3.configure(text=f'Get Info of Fav Loc : {self.get_loc_from_lat_long(threel1, threel2)}')
         self.button_get_fav4.configure(text=f'Get Info of Fav Loc : {self.get_loc_from_lat_long(fourl1, fourl2)}')
+
+        #current loc refresh
+        loc = self.get_loc_from_lat_long(self.place[0], self.place[1])
+        self.label_current_selected_location.configure(text=f"Current Selected Location : {loc}")
 
 
     def get_loc_from_lat_long(self, Latitude, Longitude):
