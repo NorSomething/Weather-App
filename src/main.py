@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 import json
 import threading
 from geopy.geocoders import Nominatim
+import time
 
 
 import world_map
@@ -64,7 +65,7 @@ class Weather_GUI:
         self.label = ctk.CTkLabel(self.top_frame, text='Weather App', font=('Arial', 55))
         self.label.grid(row = 0, column = 0, padx=10, pady=10)
 
-        self.check_state = ctk.IntVar()
+        #self.check_state = ctk.IntVar()
 
         self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
         self.button_map.grid(row = 1, column=0, padx=20, pady=20)
@@ -104,7 +105,7 @@ class Weather_GUI:
         self.button_get_weekly = ctk.CTkButton(self.root, text="Get Weekly Info", command= self.get_weekly_info, font=('Arial', 30))
         self.button_get_weekly.pack(padx=20, pady=20)
 
-        self.button_refresh_window = ctk.CTkButton(self.root, text="Refresh Window", command=self.refresh_windows, font=('Arial', 30))
+        self.button_refresh_window = ctk.CTkButton(self.root, text="Refresh Window", command=self.create_refresh_thread, font=('Arial', 30))
         self.button_refresh_window.pack(padx=20, pady=20)
 
         self.label_current_selected_location = ctk.CTkLabel(self.root, text="", font=('Arial', 30))
@@ -112,7 +113,14 @@ class Weather_GUI:
 
         self.root.mainloop()
 
+    def create_refresh_thread(self):
+        self.show_refresh_loading()
+
+        threading.Thread(target=self.refresh_windows, daemon=True).start()
+
     def refresh_windows(self):
+        
+
         with open('fav_places.json', 'r') as f:
             data = json.load(f)
 
@@ -131,6 +139,8 @@ class Weather_GUI:
         loc = self.get_loc_from_lat_long(self.place[0], self.place[1])
         self.label_current_selected_location.configure(text=f"Current Selected Location : {loc}")
 
+        self.hide_refresh_loading()
+
 
     def get_loc_from_lat_long(self, Latitude, Longitude):
         location = self.geolocator.reverse(str(Latitude)+","+str(Longitude))
@@ -148,6 +158,16 @@ class Weather_GUI:
         if hasattr(self, 'loading_bar'): #if bar is still on screen
             self.loading_bar.stop()
             self.loading_bar.destroy()
+
+    def show_refresh_loading(self):
+        self.refresh_loading = ctk.CTkProgressBar(self.root, mode='indeterminate')
+        self.refresh_loading.pack(pady=10)
+        self.refresh_loading.start()
+
+    def hide_refresh_loading(self):
+        if hasattr(self, 'refresh_loading'):
+            self.refresh_loading.stop()
+            self.refresh_loading.destroy()
 
     def show_weekly_loading(self):
         self.weekly_loading = ctk.CTkProgressBar(self.root, mode='indeterminate')
@@ -179,6 +199,8 @@ class Weather_GUI:
         lat, long = cors[0], cors[1]
 
         self.user_selected_fav_loc = True
+
+        #self.place = (lat, long)
 
         self.fav_place = (lat, long)
         self.display_info_window()
