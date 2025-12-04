@@ -186,36 +186,31 @@ class Weather_GUI:
 
     def show_moon_phases(self, moon_phase):
 
-        image_directory = os.path.join(os.path.dirname(__file__), "moon phase bin") #__file__ is current working directory
+        image_directory = os.path.join(os.path.dirname(__file__), "moon_phase_bin") #__file__ is current working directory
         #image_directory holds image paths
 
         #img_test = Image.open(os.path.join(image_directory, "waxing crescent.png"))
 
+        img = None
+
         if 0 <= moon_phase <= 0.24:
-            #waxing crescent
-            pass
+            img = img_test = Image.open(os.path.join(image_directory, "waxing_crescent.png"))
         elif moon_phase == 0.25:
-            #first quarter
-            pass
+            img = img_test = Image.open(os.path.join(image_directory, "first_quarter.png"))
         elif 0.26 <= moon_phase <= 0.49:
-            #waxing gibbous
-            pass
+            img = img_test = Image.open(os.path.join(image_directory, "waxing_gibbous.png"))
         elif moon_phase == 0.5:
-            #full moon
-            pass
+            img = img_test = Image.open(os.path.join(image_directory, "full_moon.png"))
         elif 0.51 <= moon_phase <= 0.74:
-            #waning gibbous
-            pass
+            img = img_test = Image.open(os.path.join(image_directory, "wanning_gibbous.png"))
         elif moon_phase == 0.75: 
-            #last quarter
-            pass
+            img = img_test = Image.open(os.path.join(image_directory, "third_quarter.png"))
         elif 0.76 <= moon_phase <= 0.99:
-            #waning crescent
-            pass
+            img = img_test = Image.open(os.path.join(image_directory, "waning_crescent.png"))
 
 
 
-        img_test = img_test.resize((150,150))
+        img = img_test.resize((150,150))
         tk_img = ImageTk.PhotoImage(img_test)
 
         # ll = ctk.CTkLabel(self.root, image=tk_img, text="")
@@ -466,7 +461,6 @@ class Weather_GUI:
         currnet_moon_phase = self.weather_info['currentConditions']['moonphase']
 
         moon_image = self.show_moon_phases(currnet_moon_phase)
-        
 
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
@@ -480,6 +474,7 @@ class Weather_GUI:
         self.label_sunrise_time.configure(text=f"Sunrise Time : {sunrise_time}", font=('Arial', 30))
         self.label_sunset_time.configure(text=f"Sunset Time : {sunset_time}", font=('Arial', 30))
 
+        self.label_current_moon_phase.configure(image = moon_image, text="")
 
 
 if __name__ == '__main__':
