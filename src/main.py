@@ -6,6 +6,7 @@ import os
 import datetime
 from tkinter import messagebox
 from tkinter import PhotoImage
+from PIL import Image, ImageTk
 from dotenv import load_dotenv
 import json
 import threading
@@ -108,8 +109,11 @@ class Weather_GUI:
         self.button_refresh_window = ctk.CTkButton(self.root, text="Refresh Window", command=self.create_refresh_thread, font=('Arial', 30))
         self.button_refresh_window.pack(padx=20, pady=20)
 
-        self.label_current_selected_location = ctk.CTkLabel(self.root, text="", font=('Arial', 30))
+        self.label_current_selected_location = ctk.CTkLabel(self.root, text="No Location Selected", font=('Arial', 30))
         self.label_current_selected_location.pack(padx = 20, pady=20)
+
+        self.button_img_test = ctk.CTkButton(self.root, command=self.show_moon_phases, text='test', font=('Arial', 30))
+        self.button_img_test.pack(padx=20, pady=20)
 
         self.root.mainloop()
 
@@ -136,8 +140,11 @@ class Weather_GUI:
         self.button_get_fav4.configure(text=f'Get Info of Fav Loc : {self.get_loc_from_lat_long(fourl1, fourl2)}')
 
         #current loc refresh
-        loc = self.get_loc_from_lat_long(self.place[0], self.place[1])
-        self.label_current_selected_location.configure(text=f"Current Selected Location : {loc}")
+        if self.place is None:
+            self.label_current_selected_location.configure(text="No Location Selected")
+        else:
+            loc = self.get_loc_from_lat_long(self.place[0], self.place[1])
+            self.label_current_selected_location.configure(text=f"Current Selected Location : {loc}")
 
         self.hide_refresh_loading()
 
@@ -179,6 +186,16 @@ class Weather_GUI:
             self.weekly_loading.stop()
             self.weekly_loading.destroy()
 
+    def show_moon_phases(self):
+
+        img_test = Image.open('/home/nirmal/Programs/Python/weatherapp/src/moon phase bin/waxing crescent.png')
+        img_test = img_test.resize((150,150))
+        tk_img = ImageTk.PhotoImage(img_test)
+
+        ll = ctk.CTkLabel(self.root, image=tk_img, text="")
+        ll.pack(pady=20)
+
+        self.root.__img_ref = tk_img
 
     def show_map(self):
         world_map.world_map(self.root, self.return_coords)
@@ -199,8 +216,6 @@ class Weather_GUI:
         lat, long = cors[0], cors[1]
 
         self.user_selected_fav_loc = True
-
-        #self.place = (lat, long)
 
         self.fav_place = (lat, long)
         self.display_info_window()
