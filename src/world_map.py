@@ -12,9 +12,9 @@ import fav_place
 
 class world_map:
 
-    def __init__(self, parent, callback):
+    def __init__(self, parent, pos):
 
-        self.callback = callback
+        self.pos = pos
 
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Map")
@@ -66,7 +66,7 @@ class world_map:
     def select_pos(self):
         print("select pos() triggered", self.position)
         if self.position:
-            self.callback(self.position)
+            self.pos(self.position)
             messagebox.showinfo("Info", "Weather Updated in App.")
         else:
             messagebox.showwarning("No Location", "No Location Selected.")

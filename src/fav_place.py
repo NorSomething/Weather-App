@@ -11,10 +11,10 @@ import json
 
 class select_fav_places:
 
-    def __init__(self, parent, callback):
+    def __init__(self, parent, favplace):
         
 
-        self.callback = callback
+        self.favplace = favplace
 
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Select Fav Locations")
@@ -27,14 +27,12 @@ class select_fav_places:
         self.fav_places_frame.columnconfigure((0,1,2,3), weight=1)
         self.fav_places_frame.rowconfigure((0), weight=1)
 
-        self.map_widget = tkintermapview.TkinterMapView(self.window, width=800, height=600, corner_radius=15)
+        self.map_widget = tkintermapview.TkinterMapView(self.window, width=1280, height=720, corner_radius=15)
         self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
         self.fav_pos = None
         self.map_widget.add_left_click_map_command(self.put_marker)
-        #self.button_get_fav = ctk.CTkButton(self.top_frame, text='Get Info of Fav Loc 1', command=self.return_favinfo, font=('Arial', 30))
 
-        #self.button_get_fav.grid(row = 0, column = 0, padx=20, pady=20)
         self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
         self.map_widget.set_zoom(15)
 
@@ -55,7 +53,7 @@ class select_fav_places:
     def put_marker(self, coords):
         self.map_widget.set_marker(coords[0], coords[1], text="Selected Location")
         self.fav_pos = coords
-        self.callback(self.fav_pos)
+        self.favplace(self.fav_pos)
 
     def store_data(self, fav_key):
 

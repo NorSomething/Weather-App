@@ -112,8 +112,6 @@ class Weather_GUI:
         self.label_current_selected_location = ctk.CTkLabel(self.root, text="No Location Selected", font=('Arial', 30))
         self.label_current_selected_location.pack(padx = 20, pady=20)
 
-        self.button_img_test = ctk.CTkButton(self.root, command=self.show_moon_phases, text='test', font=('Arial', 30))
-        self.button_img_test.pack(padx=20, pady=20)
 
         self.root.mainloop()
 
@@ -186,14 +184,44 @@ class Weather_GUI:
             self.weekly_loading.stop()
             self.weekly_loading.destroy()
 
-    def show_moon_phases(self):
+    def show_moon_phases(self, moon_phase):
 
-        img_test = Image.open('/home/nirmal/Programs/Python/weatherapp/src/moon phase bin/waxing crescent.png')
+        image_directory = os.path.join(os.path.dirname(__file__), "moon phase bin") #__file__ is current working directory
+        #image_directory holds image paths
+
+        #img_test = Image.open(os.path.join(image_directory, "waxing crescent.png"))
+
+        if 0 <= moon_phase <= 0.24:
+            #waxing crescent
+            pass
+        elif moon_phase == 0.25:
+            #first quarter
+            pass
+        elif 0.26 <= moon_phase <= 0.49:
+            #waxing gibbous
+            pass
+        elif moon_phase == 0.5:
+            #full moon
+            pass
+        elif 0.51 <= moon_phase <= 0.74:
+            #waning gibbous
+            pass
+        elif moon_phase == 0.75: 
+            #last quarter
+            pass
+        elif 0.76 <= moon_phase <= 0.99:
+            #waning crescent
+            pass
+
+
+
         img_test = img_test.resize((150,150))
         tk_img = ImageTk.PhotoImage(img_test)
 
-        ll = ctk.CTkLabel(self.root, image=tk_img, text="")
-        ll.pack(pady=20)
+        # ll = ctk.CTkLabel(self.root, image=tk_img, text="")
+        # ll.pack(pady=20)
+
+        return tk_img
 
         self.root.__img_ref = tk_img
 
@@ -249,8 +277,6 @@ class Weather_GUI:
         if self.place is None and not self.user_selected_fav_loc:
             messagebox.showwarning("No Location", "Select a location first.")
             return
-        
-        
         
         #week_weather is the whole dict 
 
@@ -353,6 +379,12 @@ class Weather_GUI:
         self.conditional_frame.grid_columnconfigure(0, weight=1)
         self.conditional_frame.grid_rowconfigure((0,1), weight=1)
 
+        self.moon_phase_frame = ctk.CTkFrame(self.info_frame)
+        self.moon_phase_frame.pack(padx=20, pady=20)
+
+        self.moon_phase_frame.grid_columnconfigure(0, weight=1)
+        self.moon_phase_frame.grid_rowconfigure(0, weight=1)
+
         self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="")
         self.label_current_dets_heading.pack(padx=10,pady=10)
 
@@ -383,22 +415,8 @@ class Weather_GUI:
         self.label_sunset_time =  ctk.CTkLabel(self.basic_info_frame, text="")
         self.label_sunset_time.grid(row = 3, column = 1, padx=0, pady=0)
 
-        ''' moon references : 
-        0–0.24 → New → Waxing Crescent
-
-        0.25 → First Quarter
-
-        0.26–0.49 → Waxing Gibbous
-
-        0.5 → Full Moon
-
-        0.51–0.74 → Waning Gibbous
-
-        0.75 → Last Quarter
-
-        0.76–0.99 → Waning Crescent'''
-
-        
+        self.label_current_moon_phase = ctk.CTkLabel(self.moon_phase_frame, image="", text="")
+        self.label_current_moon_phase.grid(row=0, column=0)
 
         #loading bar
         self.show_loading()
@@ -408,7 +426,8 @@ class Weather_GUI:
         self.get_info()
         self.info_window.after(0, self.hide_loading) #just self.hide_loading() is unsafe => called inside background thread
         
-        
+
+
     def get_info(self):
 
         print("get info() triggered", self.place)
@@ -443,6 +462,11 @@ class Weather_GUI:
 
         sunrise_time = self.weather_info['days'][0].get("sunrise", 0)
         sunset_time = self.weather_info['days'][0].get("sunset", 0)
+
+        currnet_moon_phase = self.weather_info['currentConditions']['moonphase']
+
+        moon_image = self.show_moon_phases(currnet_moon_phase)
+        
 
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
