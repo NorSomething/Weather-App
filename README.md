@@ -4,7 +4,7 @@
 - [ ] Beautify GUI
 - [x] Weekly Data
 - [x] Graphs
-- [ ] Sunrise Moonphase
+- [x] Sunrise Moonphase
 - [ ] AQI
 - [X] Loading Spinner
 - [ ] UX Improvements

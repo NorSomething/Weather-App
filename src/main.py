@@ -460,7 +460,7 @@ class Weather_GUI:
 
         currnet_moon_phase = self.weather_info['currentConditions']['moonphase']
 
-        moon_image = self.show_moon_phases(currnet_moon_phase)
+        moon_image = self.show_moon_phases(currnet_moon_phase) #moon phase still needs more details
 
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
