@@ -12,12 +12,13 @@ import threading
 from geopy.geocoders import Nominatim
 import time
 
-
 import world_map
 import fav_place
 import weekly_data
 
 load_dotenv()
+
+#NOte : background colors super ugly as of now!! fix!!
 
 class Weather_GUI:
 
@@ -128,22 +129,37 @@ class Weather_GUI:
         time = int(time[0:2])
 
         if 00 <= time < 6:
-            #050505
-            pass
+            return '#050505'
         elif 6 <= time < 9:
-            #F2C7C7
-            pass
+            return '#F2C7C7'
         elif 9 <= time < 16:
-            #B9E6FF
-            pass
+            return '#B9E6FF'
         elif 16 <= time < 19:
-            #FF9F4A
-            pass
+            return '#FF9F4A'
         elif 19 <= time < 24:
-            #2C1E4A
-            pass
+            return '#2C1E4A'
         else:
             pass
+    
+    def apply_bg_color(self, color):
+        widgets = [
+            self.root,
+            self.top_frame,
+            self.main_menu_frame,
+            self.misc_buttons_frame,
+            self.fav_loc_frame,
+            self.basic_info_frame,
+            self.info_frame,
+            self.desc_frame,
+            self.conditional_frame,
+            self.moon_phase_frame,
+            getattr(self, 'info_frame', None),
+        ]
+
+        for w in widgets:
+            if w is not None:
+                w.configure(fg_color=color)
+
 
     def create_refresh_thread(self):
         self.show_refresh_loading()
@@ -491,7 +507,8 @@ class Weather_GUI:
 
         current_time = self.weather_info['currentConditions']['datetime']
         color = self.set_global_bgcolor(current_time)
-        color = None
+
+        self.apply_bg_color(color)
 
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
@@ -507,7 +524,6 @@ class Weather_GUI:
 
         self.label_current_moon_phase.configure(image = moon_image, text="")
 
-        self.root.configure(bg=color)
 
 
 if __name__ == '__main__':
