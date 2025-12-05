@@ -1,6 +1,9 @@
 import customtkinter as ctk
 import tkinter
 from tkinter import messagebox
+from tkinter import PhotoImage
+from PIL import Image, ImageTk
+import os
 import matplotlib 
 import numpy as np
 
@@ -30,7 +33,7 @@ class weekly_data:
         self.weekly_data_frame.pack(padx=20, pady=20)
 
         self.weekly_data_frame.rowconfigure((0), weight=1)
-        self.weekly_data_frame.columnconfigure((0,1,2,3,4,5,6), weight=1)
+        self.weekly_data_frame.columnconfigure((0,1,2,3,4,5,6,7,8), weight=1)
 
         self.label_weekly_heading = ctk.CTkLabel(self.weekly_heading_frame, text="Weather for the next seven days", font=('Arial', 45))
         self.label_weekly_heading.grid(row=0, column=0, padx=20, pady=20)
@@ -59,6 +62,7 @@ class weekly_data:
             description = week[i+1].get('description')
             sunrise = week[i+1].get('sunrise')
             sunset = week[i+1].get('sunset')
+            moonphase = week[i+1].get('moonphase')
 
             self.days.append(day_date)
             self.min_temp_array.append(min_temp)
@@ -90,6 +94,9 @@ class weekly_data:
             self.label_label_cond = ctk.CTkLabel(self.weekly_data_frame, text="Condition", wraplength=200, justify='center', font=('Arial', 30))
             self.label_label_cond.grid(row = 7, column = 0, padx=20, pady=20)
 
+            self.label_label_moonphase = ctk.CTkLabel(self.weekly_data_frame, text="Moon Phases", wraplength=200, justify='center', font=('Arial', 30))
+            self.label_label_moonphase.grid(row = 8, column = 0, padx=20, pady=20)
+
             self.label_day_date = ctk.CTkLabel(self.weekly_data_frame, text=day_date, font=('Arial', 30))
             self.label_day_date.grid(row = 0, column = i+1, padx=20, pady=20)
 
@@ -114,8 +121,40 @@ class weekly_data:
             self.label_condition = ctk.CTkLabel(self.weekly_data_frame, text=condition, wraplength=200, justify='center', font=('Arial', 30))
             self.label_condition.grid(row = 7, column = i+1, padx=20, pady=20)
 
+            img = self.put_moon_phase(moonphase)
+
+            self.label_moon_phase = ctk.CTkLabel(self.weekly_data_frame, text="", image=img, wraplength=200, justify='center')
+            self.label_moon_phase.grid(row = 8, column = i+1, padx=20, pady=20)
+
         
+    
+    def put_moon_phase(self, moon_phase):
+        image_directory = os.path.join(os.path.dirname(__file__), "moon_phase_bin")
         
+        img = None
+
+        if 0 <= moon_phase <= 0.24:
+            img = Image.open(os.path.join(image_directory, "waxing_crescent.png"))
+        elif moon_phase == 0.25:
+            img = Image.open(os.path.join(image_directory, "first_quarter.png"))
+        elif 0.26 <= moon_phase <= 0.49:
+            img = Image.open(os.path.join(image_directory, "waxing_gibbous.png"))
+        elif moon_phase == 0.5:
+            img = Image.open(os.path.join(image_directory, "full_moon.png"))
+        elif 0.51 <= moon_phase <= 0.74:
+            img = Image.open(os.path.join(image_directory, "wanning_gibbous.png"))
+        elif moon_phase == 0.75: 
+            img = Image.open(os.path.join(image_directory, "third_quarter.png"))
+        elif 0.76 <= moon_phase <= 0.99:
+            img = Image.open(os.path.join(image_directory, "waning_crescent.png"))
+
+
+
+        img = img.resize((150,150))
+        tk_img = ImageTk.PhotoImage(img)
+
+        return tk_img
+
     def extract_weekly_data(self):
         return self.weekly_data_json["days"][:8] #this is a list??
         #first seven days from main.py

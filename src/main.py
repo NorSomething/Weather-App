@@ -189,29 +189,27 @@ class Weather_GUI:
         image_directory = os.path.join(os.path.dirname(__file__), "moon_phase_bin") #__file__ is current working directory
         #image_directory holds image paths
 
-        #img_test = Image.open(os.path.join(image_directory, "waxing crescent.png"))
-
         img = None
 
         if 0 <= moon_phase <= 0.24:
-            img = img_test = Image.open(os.path.join(image_directory, "waxing_crescent.png"))
+            img = Image.open(os.path.join(image_directory, "waxing_crescent.png"))
         elif moon_phase == 0.25:
-            img = img_test = Image.open(os.path.join(image_directory, "first_quarter.png"))
+            img = Image.open(os.path.join(image_directory, "first_quarter.png"))
         elif 0.26 <= moon_phase <= 0.49:
-            img = img_test = Image.open(os.path.join(image_directory, "waxing_gibbous.png"))
+            img = Image.open(os.path.join(image_directory, "waxing_gibbous.png"))
         elif moon_phase == 0.5:
-            img = img_test = Image.open(os.path.join(image_directory, "full_moon.png"))
+            img = Image.open(os.path.join(image_directory, "full_moon.png"))
         elif 0.51 <= moon_phase <= 0.74:
-            img = img_test = Image.open(os.path.join(image_directory, "wanning_gibbous.png"))
+            img = Image.open(os.path.join(image_directory, "wanning_gibbous.png"))
         elif moon_phase == 0.75: 
-            img = img_test = Image.open(os.path.join(image_directory, "third_quarter.png"))
+            img = Image.open(os.path.join(image_directory, "third_quarter.png"))
         elif 0.76 <= moon_phase <= 0.99:
-            img = img_test = Image.open(os.path.join(image_directory, "waning_crescent.png"))
+            img = Image.open(os.path.join(image_directory, "waning_crescent.png"))
 
 
 
-        img = img_test.resize((150,150))
-        tk_img = ImageTk.PhotoImage(img_test)
+        img = img.resize((150,150))
+        tk_img = ImageTk.PhotoImage(img)
 
         # ll = ctk.CTkLabel(self.root, image=tk_img, text="")
         # ll.pack(pady=20)
