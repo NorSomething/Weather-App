@@ -3,7 +3,6 @@ import tkinter
 import customtkinter as ctk
 import tkintermapview
 import os
-import datetime
 from tkinter import messagebox
 from tkinter import PhotoImage
 from PIL import Image, ImageTk
@@ -38,7 +37,7 @@ class Weather_GUI:
 
         self.info_window = None #for not creating extra windows
 
-        self.date = datetime.datetime.now()
+        #self.date = datetime.datetime.now()
 
         self.user_selected_fav_loc = 0
 
@@ -124,6 +123,27 @@ class Weather_GUI:
 
 
         self.root.mainloop()
+
+    def set_global_bgcolor(self, time):
+        time = int(time[0:2])
+
+        if 00 <= time < 6:
+            #050505
+            pass
+        elif 6 <= time < 9:
+            #F2C7C7
+            pass
+        elif 9 <= time < 16:
+            #B9E6FF
+            pass
+        elif 16 <= time < 19:
+            #FF9F4A
+            pass
+        elif 19 <= time < 24:
+            #2C1E4A
+            pass
+        else:
+            pass
 
     def create_refresh_thread(self):
         self.show_refresh_loading()
@@ -434,7 +454,6 @@ class Weather_GUI:
     def get_info(self):
 
         print("get info() triggered", self.place)
-        print("date time is ", self.date)
 
             
         if self.city_entered_check:
@@ -470,6 +489,10 @@ class Weather_GUI:
 
         moon_image = self.show_moon_phases(currnet_moon_phase) #moon phase still needs more details
 
+        current_time = self.weather_info['currentConditions']['datetime']
+        color = self.set_global_bgcolor(current_time)
+        color = None
+
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
         self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 30))
@@ -483,6 +506,8 @@ class Weather_GUI:
         self.label_sunset_time.configure(text=f"Sunset Time : {sunset_time}", font=('Arial', 30))
 
         self.label_current_moon_phase.configure(image = moon_image, text="")
+
+        self.root.configure(bg=color)
 
 
 if __name__ == '__main__':
