@@ -122,46 +122,23 @@ class Weather_GUI:
         self.label_current_selected_location = ctk.CTkLabel(self.misc_buttons_frame, text="No Location Selected", font=('Arial', 30))
         self.label_current_selected_location.grid(row = 2, column = 0, padx = 20, pady=20)
 
+        self.set_all_button_theme()
 
         self.root.mainloop()
 
-    def set_blobal_colors(self, time):
-        time = int(time[0:2])
+    def set_all_button_theme(self):
+        for widget in self.root.winfo_children():
+            self.force_button_color(widget)
 
-        #return (fg color, text color)
+    def force_button_color(self, widget):
+        
+        if isinstance(widget, ctk.CTkButton):
+            widget.configure(fg_color="black", text_color="white")
+            return
 
-        if 0 <= time < 4:
-            return ('#0A0A1A', '#FFFFFF')       # Midnight
-        elif 4 <= time < 7:
-            return ('#4B3C6A', '#F5ECFF')       # Dawn
-        elif 7 <= time < 10:
-            return ('#F5D7B8', '#4A2E00')       # Early Morning
-        elif 10 <= time < 16:
-            return ('#A7DAFF', '#00263A' )      # Noon
-        elif 16 <= time < 19:
-            return ('#FF8F5A', '#3A1200')       # Sunset
-        elif 19 <= time < 24:
-            return ('#1A0F2F', '#EAD9FF')       # Night
-        else:
-            pass
-
-    def apply_colors_for_everything(self, widget, bg, text):
-
-        #apply bg color if supported 
-        try:
-            widget.configure(fg_color=bg)
-        except:
-            pass
-
-        #apply text color if supported
-        try:
-            widget.configure(text_color=text)
-        except:
-            pass
-
-        #applying to all (recursion 🔥)
         for window in widget.winfo_children():
-            self.apply_colors_for_everything(window, bg, text)
+            self.force_button_color(window)
+
 
     def create_refresh_thread(self):
         self.show_refresh_loading()
@@ -258,9 +235,6 @@ class Weather_GUI:
 
         img = img.resize((150,150))
         tk_img = ImageTk.PhotoImage(img)
-
-        # ll = ctk.CTkLabel(self.root, image=tk_img, text="")
-        # ll.pack(pady=20)
 
         return tk_img
 
@@ -508,10 +482,6 @@ class Weather_GUI:
         moon_image = self.show_moon_phases(currnet_moon_phase) #moon phase still needs more details
 
         current_time = self.weather_info['currentConditions']['datetime']
-        
-        bg_color, text_color = self.set_blobal_colors(current_time)
-
-        self.apply_colors_for_everything(self.root, bg_color, text_color)
 
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
