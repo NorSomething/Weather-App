@@ -363,79 +363,76 @@ class Weather_GUI:
         
         self.display_info_window()
 
+    def make_box(self, parent, text="", font=('Arial', 30)):
+        box = ctk.CTkFrame(parent, fg_color="#3b3b3b", border_width=2, border_color="#666666",corner_radius=12, width=280, height=90)
+        box.pack_propagate(False)
+
+        label = ctk.CTkLabel(box, text=text, font=font, anchor="center", wraplength=260)
+        label.pack(expand=True, padx=10, pady=10)
+
+        return box, label
+
+
     def display_info_window(self):
 
         if self.info_window is not None and self.info_window.winfo_exists():
             self.get_info()
-            return 
-        
+            return
+
         self.info_window = ctk.CTkToplevel(self.root)
         self.info_window.title("Info Window")
-        self.info_window.geometry("1460x900")
+        self.info_window.geometry("1000x1000")
 
-        self.info_frame = ctk.CTkFrame(self.info_window)
-        self.info_frame.pack(padx=20, pady=20, fill = 'x')
+        self.info_frame = ctk.CTkFrame(self.info_window, fg_color="#1e1e1e")
+        self.info_frame.pack(pady=20)
 
-        self.basic_info_frame = ctk.CTkFrame(self.info_frame, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
-        self.basic_info_frame.pack(padx=20, pady=20, fill = 'x')
+        self.label_heading = ctk.CTkLabel(self.info_frame, text="Information Window", font=("Helvetica", 40))
+        self.label_heading.pack(pady=20)
 
-        self.basic_info_frame.grid_columnconfigure((0,1), weight=1)
-        self.basic_info_frame.grid_rowconfigure((0,1,2), weight=1)
+        basic_grid = ctk.CTkFrame(self.info_frame, fg_color="#1e1e1e")
+        basic_grid.pack(pady=10)
 
-        self.desc_frame = ctk.CTkFrame(self.info_frame)
-        self.desc_frame.pack(padx=20, pady=20, fill='x')
+        self.temp_box, self.label_current_temp = self.make_box(basic_grid)
+        self.temp_box.grid(row=0, column=0, padx=20, pady=10)
 
-        self.desc_frame.grid_columnconfigure(0, weight=1)
-        self.desc_frame.grid_rowconfigure(0, weight=1)
+        self.humidity_box, self.label_current_humidity = self.make_box(basic_grid)
+        self.humidity_box.grid(row=0, column=1, padx=20, pady=10)
 
-        self.conditional_frame = ctk.CTkFrame(self.info_frame)
-        self.conditional_frame.pack(padx=20, pady=20, fill = 'x')
+        self.precip_box, self.label_precip_percent = self.make_box(basic_grid)
+        self.precip_box.grid(row=1, column=0, padx=20, pady=10)
 
-        self.conditional_frame.grid_columnconfigure(0, weight=1)
-        self.conditional_frame.grid_rowconfigure((0,1), weight=1)
+        self.uv_box, self.labeL_uv_index = self.make_box(basic_grid)
+        self.uv_box.grid(row=1, column=1, padx=20, pady=10)
 
-        self.moon_phase_frame = ctk.CTkFrame(self.info_frame)
-        self.moon_phase_frame.pack(padx=20, pady=20)
+        self.sunrise_box, self.label_sunrise_time = self.make_box(basic_grid)
+        self.sunrise_box.grid(row=2, column=0, padx=20, pady=10)
 
-        self.moon_phase_frame.grid_columnconfigure(0, weight=1)
-        self.moon_phase_frame.grid_rowconfigure(0, weight=1)
+        self.sunset_box, self.label_sunset_time = self.make_box(basic_grid)
+        self.sunset_box.grid(row=2, column=1, padx=20, pady=10)
 
-        self.label_current_dets_heading = ctk.CTkLabel(self.info_frame, text="")
-        self.label_current_dets_heading.pack(padx=10,pady=10)
+        self.desc_box, self.label_current_description = self.make_box(self.info_frame, font=("Arial", 24))
+        self.desc_box.configure(width=600, height=120)
+        self.desc_box.pack(pady=15)
 
-        self.label_current_temp = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_current_temp.grid(row = 0, column = 0, padx=10, pady=10, sticky='w')
+        cond_grid = ctk.CTkFrame(self.info_frame, fg_color="#1e1e1e")
+        cond_grid.pack(pady=10)
 
-        self.label_current_humidity = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_current_humidity.grid(row = 0, column = 1, padx=10, pady=10, sticky='w')
+        self.umbrella_box, self.label_umbrella_check = self.make_box(cond_grid)
+        self.umbrella_box.grid(row=0, column=0, padx=20, pady=10)
 
-        self.label_current_description = ctk.CTkLabel(self.desc_frame, text="")
-        self.label_current_description.grid(row = 0, column = 0, padx = 20, pady = 10)
+        self.sunscreen_box, self.label_sunscreen_check = self.make_box(cond_grid)
+        self.sunscreen_box.grid(row=0, column=1, padx=20, pady=10)
 
-        self.label_precip_percent = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_precip_percent.grid(row = 2, column = 0, padx=10, pady=10, sticky='w')
+        self.moon_box = ctk.CTkFrame(self.info_frame,fg_color="#2f2f2f",border_width=2, border_color="#555", corner_radius=12,width=180, height=180)
+        self.moon_box.pack(pady=20)
 
-        self.labeL_uv_index = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.labeL_uv_index.grid(row = 2, column = 1, padx=10, pady=10, sticky='w')
-
-        self.label_umbrella_check = ctk.CTkLabel(self.conditional_frame, text="")
-        self.label_umbrella_check.grid(row=0, column=0, padx=10, pady=10)
-
-        self.label_sunscreen_check = ctk.CTkLabel(self.conditional_frame, text="")
-        self.label_sunscreen_check.grid(row=1, column= 0, padx=10, pady=10)
-
-        self.label_sunrise_time = ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_sunrise_time.grid(row = 3, column =  0, padx=20, pady=20)
-
-        self.label_sunset_time =  ctk.CTkLabel(self.basic_info_frame, text="")
-        self.label_sunset_time.grid(row = 3, column = 1, padx=0, pady=0)
-
-        self.label_current_moon_phase = ctk.CTkLabel(self.moon_phase_frame, image="", text="")
-        self.label_current_moon_phase.grid(row=0, column=0)
+        self.label_current_moon_phase = ctk.CTkLabel(self.moon_box, image=None, text="")
+        self.label_current_moon_phase.pack(expand=True, padx=10, pady=10)
 
         #loading bar
         self.show_loading()
         threading.Thread(target=self.load_weather_thread_info_window, daemon=True).start()
+
 
     def load_weather_thread_info_window(self):
         self.get_info()
@@ -483,17 +480,17 @@ class Weather_GUI:
 
         current_time = self.weather_info['currentConditions']['datetime']
 
-        self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
+        self.label_current_description.configure(text="Weather Information ", font=('Arial', 40))
 
-        self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 30))
-        self.label_current_humidity.configure(text=f"Current Humidity is : {current_humidity} percent.", font=('Arial', 30))
-        self.label_current_description.configure(text=current_description, font=('Arial', 30))
-        self.label_precip_percent.configure(text=f"Current Chance of Rain is : {current_precip_percent} percent.", font=('Arial', 30))
-        self.labeL_uv_index.configure(text=f"Current UV Index is : {current_uv_index}.", font=('Arial', 30))
-        self.label_umbrella_check.configure(text=self.umbrella_check(current_precip_percent), font=('Arial', 30))
-        self.label_sunscreen_check.configure(text=self.sunscreen_check(current_uv_index), font=('Arial', 30))
-        self.label_sunrise_time.configure(text=f"Sunrise Time : {sunrise_time}", font=('Arial', 30))
-        self.label_sunset_time.configure(text=f"Sunset Time : {sunset_time}", font=('Arial', 30))
+        self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 25))
+        self.label_current_humidity.configure(text=f"Current Humidity is : {current_humidity} percent.", font=('Arial', 25))
+        self.label_current_description.configure(text=current_description, font=('Arial', 25))
+        self.label_precip_percent.configure(text=f"Current Chance of Rain is : {current_precip_percent} percent.", font=('Arial', 25))
+        self.labeL_uv_index.configure(text=f"Current UV Index is : {current_uv_index}.", font=('Arial', 25))
+        self.label_umbrella_check.configure(text=self.umbrella_check(current_precip_percent), font=('Arial', 25))
+        self.label_sunscreen_check.configure(text=self.sunscreen_check(current_uv_index), font=('Arial', 25))
+        self.label_sunrise_time.configure(text=f"Sunrise Time : {sunrise_time}", font=('Arial', 25))
+        self.label_sunset_time.configure(text=f"Sunset Time : {sunset_time}", font=('Arial', 25))
         self.label_current_moon_phase.configure(image = moon_image, text="")
 
 
