@@ -125,41 +125,43 @@ class Weather_GUI:
 
         self.root.mainloop()
 
-    def set_global_bgcolor(self, time):
+    def set_blobal_colors(self, time):
         time = int(time[0:2])
 
-        if 00 <= time < 6:
-            return '#050505'
-        elif 6 <= time < 9:
-            return '#F2C7C7'
-        elif 9 <= time < 16:
-            return '#B9E6FF'
+        #return (fg color, text color)
+
+        if 0 <= time < 4:
+            return ('#0A0A1A', '#FFFFFF')       # Midnight
+        elif 4 <= time < 7:
+            return ('#4B3C6A', '#F5ECFF')       # Dawn
+        elif 7 <= time < 10:
+            return ('#F5D7B8', '#4A2E00')       # Early Morning
+        elif 10 <= time < 16:
+            return ('#A7DAFF', '#00263A' )      # Noon
         elif 16 <= time < 19:
-            return '#FF9F4A'
+            return ('#FF8F5A', '#3A1200')       # Sunset
         elif 19 <= time < 24:
-            return '#2C1E4A'
+            return ('#1A0F2F', '#EAD9FF')       # Night
         else:
             pass
-    
-    def apply_bg_color(self, color):
-        widgets = [
-            self.root,
-            self.top_frame,
-            self.main_menu_frame,
-            self.misc_buttons_frame,
-            self.fav_loc_frame,
-            self.basic_info_frame,
-            self.info_frame,
-            self.desc_frame,
-            self.conditional_frame,
-            self.moon_phase_frame,
-            getattr(self, 'info_frame', None),
-        ]
 
-        for w in widgets:
-            if w is not None:
-                w.configure(fg_color=color)
+    def apply_colors_for_everything(self, widget, bg, text):
 
+        #apply bg color if supported 
+        try:
+            widget.configure(fg_color=bg)
+        except:
+            pass
+
+        #apply text color if supported
+        try:
+            widget.configure(text_color=text)
+        except:
+            pass
+
+        #applying to all (recursion 🔥)
+        for window in widget.winfo_children():
+            self.apply_colors_for_everything(window, bg, text)
 
     def create_refresh_thread(self):
         self.show_refresh_loading()
@@ -506,9 +508,10 @@ class Weather_GUI:
         moon_image = self.show_moon_phases(currnet_moon_phase) #moon phase still needs more details
 
         current_time = self.weather_info['currentConditions']['datetime']
-        color = self.set_global_bgcolor(current_time)
+        
+        bg_color, text_color = self.set_blobal_colors(current_time)
 
-        self.apply_bg_color(color)
+        self.apply_colors_for_everything(self.root, bg_color, text_color)
 
         self.label_current_dets_heading.configure(text="Weather Information ", font=('Arial', 40))
 
@@ -521,7 +524,6 @@ class Weather_GUI:
         self.label_sunscreen_check.configure(text=self.sunscreen_check(current_uv_index), font=('Arial', 30))
         self.label_sunrise_time.configure(text=f"Sunrise Time : {sunrise_time}", font=('Arial', 30))
         self.label_sunset_time.configure(text=f"Sunset Time : {sunset_time}", font=('Arial', 30))
-
         self.label_current_moon_phase.configure(image = moon_image, text="")
 
 
