@@ -13,13 +13,13 @@ class weekly_stats:
         
         self.weekly_stats_window = ctk.CTkToplevel(parent)
         self.weekly_stats_window.title("Statistics Window")
-        self.weekly_stats_window.geometry('1920x1080')
+        self.weekly_stats_window.geometry('640x300')
 
         self.weekly_buttons_frame = ctk.CTkFrame(self.weekly_stats_window)
         self.weekly_buttons_frame.pack(padx = 20, pady=20, fill='x')
 
-        self.weekly_buttons_frame.columnconfigure((0,1,2,3), weight=1)
-        self.weekly_buttons_frame.rowconfigure(0, weight=1)
+        self.weekly_buttons_frame.columnconfigure((0,1), weight=1)
+        self.weekly_buttons_frame.rowconfigure((0,1,2), weight=1)
 
         self.dates = np.array(self.data_list[0])    
         self.min_temp = np.array(self.data_list[1])
@@ -33,19 +33,19 @@ class weekly_stats:
         self.button_min_temp_graph.grid(row = 0, column = 0, padx = 20, pady=20)
 
         self.button_max_temp = ctk.CTkButton(self.weekly_buttons_frame, text="Get MaxTemp Graph", command= lambda: self.get_graph(self.max_temp, "Maximum Temperate Variation in the following week.","Temperature in C"), font=('Arial', 30)) #lamba here as you cant give arg here
-        self.button_max_temp.grid(row = 0, column = 1, padx = 20, pady=20)
+        self.button_max_temp.grid(row = 1, column = 0, padx = 20, pady=20)
 
         self.button_humidity = ctk.CTkButton(self.weekly_buttons_frame, text="Get Humidity Graph", command= lambda: self.get_graph(self.humidity, "Humidity Variation in the following week.","Preesure in mm of Hg"), font=('Arial', 30)) #lamba here as you cant give arg here
-        self.button_humidity.grid(row = 0, column = 2, padx = 20, pady=20)
+        self.button_humidity.grid(row = 2, column = 0, padx = 20, pady=20)
 
         self.button_precip = ctk.CTkButton(self.weekly_buttons_frame, text="Get Precip Graph", command= lambda: self.get_graph(self.precip, "Precipitation Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
-        self.button_precip.grid(row = 0, column = 3, padx = 20, pady=20)
+        self.button_precip.grid(row = 0, column = 1, padx = 20, pady=20)
 
         self.button_sunrise = ctk.CTkButton(self.weekly_buttons_frame, text="Get Sunrise Graph", command= lambda: self.get_graph(self.sunrise, "Sunrise Time Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
-        self.button_sunrise.grid(row = 0, column = 4, padx = 20, pady=20)
+        self.button_sunrise.grid(row = 1, column = 1, padx = 20, pady=20)
 
         self.button_precip = ctk.CTkButton(self.weekly_buttons_frame, text="Get Sunset Graph", command= lambda: self.get_graph(self.sunset, "Sunset Time Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
-        self.button_precip.grid(row = 0, column = 5, padx = 20, pady=20)
+        self.button_precip.grid(row = 2, column = 1, padx = 20, pady=20)
         
 
     def get_graph(self, ycoords, title, ylabel):
