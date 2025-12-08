@@ -18,17 +18,20 @@ class select_fav_places:
 
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Select Fav Locations")
-        self.window.geometry('1920x1080')
+        self.window.geometry('1680x720')
 
+        self.parent_frame = ctk.CTkFrame(self.window)
+        self.parent_frame.pack(pady=5)
 
-        self.fav_places_frame = ctk.CTkFrame(self.window)
-        self.fav_places_frame.pack(side='bottom', fill='x', pady=5)
+        self.fav_places_frame = ctk.CTkFrame(self.parent_frame)
+        self.fav_places_frame.grid(row = 0, column = 0, pady=5)
 
-        self.fav_places_frame.columnconfigure((0,1,2,3), weight=1)
-        self.fav_places_frame.rowconfigure((0), weight=1)
+        self.fav_places_frame.rowconfigure((0,1,2,3), weight=1)
+        self.fav_places_frame.columnconfigure((0), weight=1)
 
-        self.map_widget = tkintermapview.TkinterMapView(self.window, width=1280, height=720, corner_radius=15)
-        self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+        self.map_widget = tkintermapview.TkinterMapView(self.parent_frame, width=1280, height=720, corner_radius=15)
+        #self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+        self.map_widget.grid(row = 0, column=1, padx=10, pady=10)
 
         self.fav_pos = None
         self.map_widget.add_left_click_map_command(self.put_marker)
@@ -37,17 +40,17 @@ class select_fav_places:
         self.map_widget.set_zoom(15)
 
         #passing lambda funcition here cuz command cant take functions with parameters
-        self.select_fav_button1 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place1"), text='Set location as Fav Place 1')
-        self.select_fav_button1.grid(row=0, column=0)
+        self.select_fav_button1 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place1"), text='Set location as Fav Place 1', font=('Arial', 25))
+        self.select_fav_button1.grid(row=0, column=0, padx=10, pady=20)
 
-        self.select_fav_button2 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place2"), text='Set location as Fav Place 2')
-        self.select_fav_button2.grid(row=0, column=1)
+        self.select_fav_button2 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place2"), text='Set location as Fav Place 2', font=('Arial', 25))
+        self.select_fav_button2.grid(row=1, column=0, padx=10, pady=20)
         
-        self.select_fav_button3 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place3"), text='Set location as Fav Place 3')
-        self.select_fav_button3.grid(row=0, column=2)
+        self.select_fav_button3 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place3"), text='Set location as Fav Place 3', font=('Arial', 25))
+        self.select_fav_button3.grid(row=2, column=0, padx=10, pady=20)
 
-        self.select_fav_button4 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place4"), text='Set location as Fav Place 4')
-        self.select_fav_button4.grid(row=0, column=3)
+        self.select_fav_button4 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place4"), text='Set location as Fav Place 4', font=('Arial', 25))
+        self.select_fav_button4.grid(row=3, column=0, padx=10, pady=20)
 
 
     def put_marker(self, coords):

@@ -32,7 +32,7 @@ class Weather_GUI:
 
         self.root = ctk.CTk()
 
-        self.root.geometry('1200x800')
+        self.root.geometry('1200x840')
         self.root.title('WeatherApp')
 
 
@@ -364,7 +364,7 @@ class Weather_GUI:
         self.display_info_window()
 
     def make_box(self, parent, text="", font=('Arial', 30)):
-        box = ctk.CTkFrame(parent, fg_color="#3b3b3b", border_width=2, border_color="#666666",corner_radius=12, width=280, height=90)
+        box = ctk.CTkFrame(parent, fg_color="#262626", border_width=2, border_color="#4da6ff",corner_radius=16, width=280, height=90)
         box.pack_propagate(False)
 
         label = ctk.CTkLabel(box, text=text, font=font, anchor="center", wraplength=260)
@@ -414,7 +414,7 @@ class Weather_GUI:
         self.desc_box.configure(width=600, height=120)
         self.desc_box.pack(pady=15)
 
-        cond_grid = ctk.CTkFrame(self.info_frame, fg_color="#1e1e1e")
+        cond_grid = ctk.CTkFrame(self.info_frame, fg_color="#1a1a1a")
         cond_grid.pack(pady=10)
 
         self.umbrella_box, self.label_umbrella_check = self.make_box(cond_grid)
@@ -423,7 +423,7 @@ class Weather_GUI:
         self.sunscreen_box, self.label_sunscreen_check = self.make_box(cond_grid)
         self.sunscreen_box.grid(row=0, column=1, padx=20, pady=10)
 
-        self.moon_box = ctk.CTkFrame(self.info_frame,fg_color="#2f2f2f",border_width=2, border_color="#555", corner_radius=12,width=180, height=180)
+        self.moon_box = ctk.CTkFrame(self.info_frame,fg_color="#262626",border_width=2, border_color="#4da6ff", corner_radius=12,width=180, height=180)
         self.moon_box.pack(pady=20)
 
         self.label_current_moon_phase = ctk.CTkLabel(self.moon_box, image=None, text="")
@@ -482,7 +482,7 @@ class Weather_GUI:
 
         self.label_current_description.configure(text="Weather Information ", font=('Arial', 40))
 
-        self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.2f} C.", font=('Arial', 25))
+        self.label_current_temp.configure(text=f"Current Temperature is : {current_temp:.1f}°C.", font=('Arial', 25))
         self.label_current_humidity.configure(text=f"Current Humidity is : {current_humidity} percent.", font=('Arial', 25))
         self.label_current_description.configure(text=current_description, font=('Arial', 25))
         self.label_precip_percent.configure(text=f"Current Chance of Rain is : {current_precip_percent} percent.", font=('Arial', 25))

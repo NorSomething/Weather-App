@@ -13,7 +13,7 @@ class weekly_stats:
         
         self.weekly_stats_window = ctk.CTkToplevel(parent)
         self.weekly_stats_window.title("Statistics Window")
-        self.weekly_stats_window.geometry('640x300')
+        self.weekly_stats_window.geometry('660x300')
 
         self.weekly_buttons_frame = ctk.CTkFrame(self.weekly_stats_window)
         self.weekly_buttons_frame.pack(padx = 20, pady=20, fill='x')
