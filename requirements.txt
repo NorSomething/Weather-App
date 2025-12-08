@@ -1,0 +1,9 @@
+requests
+customtkinter
+tkintermapview
+Pillow
+python-dotenv
+geopy
+matplotlib
+numpy
+
