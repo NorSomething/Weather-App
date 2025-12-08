@@ -29,22 +29,22 @@ class weekly_stats:
         self.sunrise = np.array(self.data_list[5])
         self.sunset = np.array(self.data_list[6])
 
-        self.button_min_temp_graph = ctk.CTkButton(self.weekly_buttons_frame, text="Get MinTemp Graph", command= lambda: self.get_graph(self.min_temp, "Minimum Temperate Variation in the following week.","Temperature in C"), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_min_temp_graph = ctk.CTkButton(self.weekly_buttons_frame, text="Get MinTemp Graph", command= lambda: self.get_graph(self.min_temp, "Minimum Temperate Variation in the following week.","Temperature in C"), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white") #lamba here as you cant give arg here
         self.button_min_temp_graph.grid(row = 0, column = 0, padx = 20, pady=20)
 
-        self.button_max_temp = ctk.CTkButton(self.weekly_buttons_frame, text="Get MaxTemp Graph", command= lambda: self.get_graph(self.max_temp, "Maximum Temperate Variation in the following week.","Temperature in C"), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_max_temp = ctk.CTkButton(self.weekly_buttons_frame, text="Get MaxTemp Graph", command= lambda: self.get_graph(self.max_temp, "Maximum Temperate Variation in the following week.","Temperature in C"), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white") #lamba here as you cant give arg here
         self.button_max_temp.grid(row = 1, column = 0, padx = 20, pady=20)
 
-        self.button_humidity = ctk.CTkButton(self.weekly_buttons_frame, text="Get Humidity Graph", command= lambda: self.get_graph(self.humidity, "Humidity Variation in the following week.","Preesure in mm of Hg"), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_humidity = ctk.CTkButton(self.weekly_buttons_frame, text="Get Humidity Graph", command= lambda: self.get_graph(self.humidity, "Humidity Variation in the following week.","Preesure in mm of Hg"), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white") #lamba here as you cant give arg here
         self.button_humidity.grid(row = 2, column = 0, padx = 20, pady=20)
 
-        self.button_precip = ctk.CTkButton(self.weekly_buttons_frame, text="Get Precip Graph", command= lambda: self.get_graph(self.precip, "Precipitation Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_precip = ctk.CTkButton(self.weekly_buttons_frame, text="Get Precip Graph", command= lambda: self.get_graph(self.precip, "Precipitation Variation in the following week.",""), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white") #lamba here as you cant give arg here
         self.button_precip.grid(row = 0, column = 1, padx = 20, pady=20)
 
-        self.button_sunrise = ctk.CTkButton(self.weekly_buttons_frame, text="Get Sunrise Graph", command= lambda: self.get_graph(self.sunrise, "Sunrise Time Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_sunrise = ctk.CTkButton(self.weekly_buttons_frame, text="Get Sunrise Graph", command= lambda: self.get_graph(self.sunrise, "Sunrise Time Variation in the following week.",""), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white") #lamba here as you cant give arg here
         self.button_sunrise.grid(row = 1, column = 1, padx = 20, pady=20)
 
-        self.button_precip = ctk.CTkButton(self.weekly_buttons_frame, text="Get Sunset Graph", command= lambda: self.get_graph(self.sunset, "Sunset Time Variation in the following week.",""), font=('Arial', 30)) #lamba here as you cant give arg here
+        self.button_precip = ctk.CTkButton(self.weekly_buttons_frame, text="Get Sunset Graph", command= lambda: self.get_graph(self.sunset, "Sunset Time Variation in the following week.",""), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white") #lamba here as you cant give arg here
         self.button_precip.grid(row = 2, column = 1, padx = 20, pady=20)
         
 

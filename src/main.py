@@ -389,7 +389,7 @@ class Weather_GUI:
         self.display_info_window()
 
     def make_box(self, parent, text="", font=('Arial', 30)):
-        box = ctk.CTkFrame(parent, fg_color="#262626", border_width=2, border_color="#4da6ff",corner_radius=75, width=280, height=90)
+        box = ctk.CTkFrame(parent, fg_color="#101010", border_width=6, border_color="#4da6ff",corner_radius=75, width=280, height=90)
         box.pack_propagate(False)
 
         label = ctk.CTkLabel(box, text=text, font=font, anchor="center", wraplength=260)
@@ -407,14 +407,15 @@ class Weather_GUI:
         self.info_window = ctk.CTkToplevel(self.root)
         self.info_window.title("Info Window")
         self.info_window.geometry("1000x1000")
+        self.info_window.configure(fg_color='#101010')
 
-        self.info_frame = ctk.CTkFrame(self.info_window, fg_color="#1e1e1e")
+        self.info_frame = ctk.CTkFrame(self.info_window, fg_color="#101010")
         self.info_frame.pack(pady=20)
 
         self.label_heading = ctk.CTkLabel(self.info_frame, text="Information Window", font=("Helvetica", 40))
         self.label_heading.pack(pady=20)
 
-        basic_grid = ctk.CTkFrame(self.info_frame, fg_color="#1e1e1e")
+        basic_grid = ctk.CTkFrame(self.info_frame, fg_color="#101010")
         basic_grid.pack(pady=10)
 
         self.temp_box, self.label_current_temp = self.make_box(basic_grid)
@@ -439,7 +440,7 @@ class Weather_GUI:
         self.desc_box.configure(width=600, height=120)
         self.desc_box.pack(pady=15)
 
-        cond_grid = ctk.CTkFrame(self.info_frame, fg_color="#1a1a1a")
+        cond_grid = ctk.CTkFrame(self.info_frame, fg_color="#101010")
         cond_grid.pack(pady=10)
 
         self.umbrella_box, self.label_umbrella_check = self.make_box(cond_grid)
