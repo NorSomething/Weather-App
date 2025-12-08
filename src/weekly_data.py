@@ -8,6 +8,7 @@ import matplotlib
 import numpy as np
 
 import weekly_data_stats
+from main import Weather_GUI
 
 class weekly_data:
 
@@ -21,16 +22,18 @@ class weekly_data:
         self.weekly_data_window.title("Weekly Data")
         self.weekly_data_window.geometry('1920x1080')
 
+        self.weekly_data_window.configure(fg_color='#101010')
+
         week = self.extract_weekly_data() #get weekly data
 
-        self.weekly_heading_frame = ctk.CTkFrame(self.weekly_data_window)
+        self.weekly_heading_frame = ctk.CTkFrame(self.weekly_data_window, fg_color='#101010', border_width=6, border_color="#3A78C2", corner_radius=75)
         self.weekly_heading_frame.pack(padx=20, pady=20)
 
         self.weekly_heading_frame.rowconfigure((0), weight=1)
         self.weekly_heading_frame.columnconfigure(0, weight=1)
 
-        self.weekly_data_frame = ctk.CTkFrame(self.weekly_data_window)
-        self.weekly_data_frame.pack(padx=20, pady=20)
+        self.weekly_data_frame = ctk.CTkFrame(self.weekly_data_window, fg_color='#101010', border_width=6, border_color="#3A78C2", corner_radius=75)
+        self.weekly_data_frame.pack(padx=10, pady=10)
 
         self.weekly_data_frame.rowconfigure((0), weight=1)
         self.weekly_data_frame.columnconfigure((0,1,2,3,4,5,6,7,8), weight=1)
@@ -38,7 +41,7 @@ class weekly_data:
         self.label_weekly_heading = ctk.CTkLabel(self.weekly_heading_frame, text="Weather for the next seven days", font=('Arial', 45))
         self.label_weekly_heading.grid(row=0, column=0, padx=20, pady=20)
 
-        self.button_get_weekly_graphs = ctk.CTkButton(self.weekly_heading_frame, text="Get Statistical Data", command=self.open_weeky_stats_window, font=('Arial', 30))
+        self.button_get_weekly_graphs = ctk.CTkButton(self.weekly_heading_frame, text="Get Statistical Data", command=self.open_weeky_stats_window, fg_color="#4A90E2", hover_color="#3A78C2", text_color="white", font=('Arial', 30))
         self.button_get_weekly_graphs.grid(row=1, column=0, padx=20, pady=20)
         
         self.days = []
@@ -74,59 +77,61 @@ class weekly_data:
             
 
             self.label_label_mintemp = ctk.CTkLabel(self.weekly_data_frame, text="Minimum Temperature", wraplength=200, justify='center',font=('Arial', 30))
-            self.label_label_mintemp.grid(row = 1, column = 0, padx=20, pady=20)
+            self.label_label_mintemp.grid(row = 1, column = 0, padx=10, pady=10)
 
             self.label_label_maxtemp = ctk.CTkLabel(self.weekly_data_frame, text="Maximum Temperature", wraplength=200, justify='center', font=('Arial', 30))
-            self.label_label_maxtemp.grid(row = 2, column = 0, padx=20, pady=20)
+            self.label_label_maxtemp.grid(row = 2, column = 0, padx=10, pady=10)
 
             self.label_label_humidity = ctk.CTkLabel(self.weekly_data_frame, text="Humidity", wraplength=200, justify='center', font=('Arial', 30))
-            self.label_label_humidity.grid(row = 3, column = 0, padx=20, pady=20)
+            self.label_label_humidity.grid(row = 3, column = 0, padx=10, pady=10)
 
             self.label_label_precip = ctk.CTkLabel(self.weekly_data_frame, text="Precipitation", wraplength=200, justify='center', font=('Arial', 30))
-            self.label_label_precip.grid(row = 4, column = 0, padx=20, pady=20)
+            self.label_label_precip.grid(row = 4, column = 0, padx=10, pady=10)
 
             self.label_label_sunrise = ctk.CTkLabel(self.weekly_data_frame, text="Sunrise", wraplength=200, justify='center', font=('Arial', 30))
-            self.label_label_sunrise.grid(row = 5, column = 0, padx=20, pady=20)
+            self.label_label_sunrise.grid(row = 5, column = 0, padx=10, pady=10)
 
             self.label_label_sunset = ctk.CTkLabel(self.weekly_data_frame, text="Sunset", wraplength=200, justify='center', font=('Arial', 30))
-            self.label_label_sunset.grid(row = 6, column = 0, padx=20, pady=20)
+            self.label_label_sunset.grid(row = 6, column = 0, padx=10, pady=10)
 
             self.label_label_cond = ctk.CTkLabel(self.weekly_data_frame, text="Condition", wraplength=200, justify='center', font=('Arial', 30))
-            self.label_label_cond.grid(row = 7, column = 0, padx=20, pady=20)
+            self.label_label_cond.grid(row = 7, column = 0, padx=10, pady=10)
 
             self.label_label_moonphase = ctk.CTkLabel(self.weekly_data_frame, text="Moon Phases", wraplength=200, justify='center', font=('Arial', 30))
-            self.label_label_moonphase.grid(row = 8, column = 0, padx=20, pady=20)
+            self.label_label_moonphase.grid(row = 8, column = 0, padx=10, pady=10)
 
             self.label_day_date = ctk.CTkLabel(self.weekly_data_frame, text=day_date, font=('Arial', 30))
-            self.label_day_date.grid(row = 0, column = i+1, padx=20, pady=20)
+            self.label_day_date.grid(row = 0, column = i+1, padx=10, pady=10)
 
             self.label_min_temp = ctk.CTkLabel(self.weekly_data_frame, text=min_temp, font=('Arial', 30))
             self.label_min_temp.grid(row = 1, column = i+1, padx = 20, pady = 20)
 
             self.label_max_temp = ctk.CTkLabel(self.weekly_data_frame, text=max_temp, font=('Arial', 30))
-            self.label_max_temp.grid(row = 2, column = i+1, padx=20, pady=20)
+            self.label_max_temp.grid(row = 2, column = i+1, padx=10, pady=10)
 
             self.label_humidity = ctk.CTkLabel(self.weekly_data_frame, text=humidity, font=('Arial', 30))
-            self.label_humidity.grid(row = 3, column = i+1, padx=20, pady=20)
+            self.label_humidity.grid(row = 3, column = i+1, padx=10, pady=10)
 
             self.label_precip = ctk.CTkLabel(self.weekly_data_frame, text=precip, font=('Arial', 30))
-            self.label_precip.grid(row = 4, column = i+1, padx=20, pady=20)
+            self.label_precip.grid(row = 4, column = i+1, padx=10, pady=10)
 
             self.label_sunrise = ctk.CTkLabel(self.weekly_data_frame, text=sunrise, font=('Arial', 30))
-            self.label_sunrise.grid(row = 5, column = i+1, padx=20, pady=20)
+            self.label_sunrise.grid(row = 5, column = i+1, padx=10, pady=10)
 
             self.label_sunset = ctk.CTkLabel(self.weekly_data_frame, text=sunset, font=('Arial', 30))
-            self.label_sunset.grid(row = 6, column = i+1, padx=20, pady=20)
+            self.label_sunset.grid(row = 6, column = i+1, padx=10, pady=10)
 
             self.label_condition = ctk.CTkLabel(self.weekly_data_frame, text=condition, wraplength=200, justify='center', font=('Arial', 30))
-            self.label_condition.grid(row = 7, column = i+1, padx=20, pady=20)
+            self.label_condition.grid(row = 7, column = i+1, padx=10, pady=10)
 
             img = self.put_moon_phase(moonphase)
 
             self.label_moon_phase = ctk.CTkLabel(self.weekly_data_frame, text="", image=img, wraplength=200, justify='center')
-            self.label_moon_phase.grid(row = 8, column = i+1, padx=20, pady=20)
+            self.label_moon_phase.grid(row = 8, column = i+1, padx=10, pady=10)
 
-        
+        Weather_GUI.set_button_color()
+        Weather_GUI.set_frame_color()
+
     
     def put_moon_phase(self, moon_phase):
         image_directory = os.path.join(os.path.dirname(__file__), "moon_phase_bin")

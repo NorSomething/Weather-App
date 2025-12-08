@@ -35,6 +35,7 @@ class Weather_GUI:
         self.root.geometry('1200x840')
         self.root.title('WeatherApp')
 
+        self.root.configure(fg_color='#101010')
 
         self.info_window = None #for not creating extra windows
 
@@ -51,25 +52,25 @@ class Weather_GUI:
             #->> Description ->> not Grid
         #Conditional Frames --> Grid: each cell has information of stuff that needs computing (need sunscreen umrella)
 
-        self.top_frame = ctk.CTkFrame(self.root, fg_color="#2b2b2b", border_width=2, border_color="#444444", corner_radius=15)
+        self.top_frame = ctk.CTkFrame(self.root, fg_color="#101010", border_width=6, border_color="#3A78C2", corner_radius=75)
         self.top_frame.pack(padx=20, pady=20)
 
         self.top_frame.grid_columnconfigure((0,1,2,3), weight=1)
         self.top_frame.grid_rowconfigure((0), weight=1)
 
-        self.main_menu_frame = ctk.CTkFrame(self.root, fg_color='#2b2b2b', border_width=2, border_color="#444444", corner_radius=15)
+        self.main_menu_frame = ctk.CTkFrame(self.root, fg_color='#101010', border_width=6, border_color="#3A78C2", corner_radius=75)
         self.main_menu_frame.pack(padx=20, pady=20)
         
         self.main_menu_frame.grid_columnconfigure((0,1), weight=1)
         self.main_menu_frame.grid_rowconfigure(0, weight=1)
 
-        self.misc_buttons_frame = ctk.CTkFrame(self.main_menu_frame, fg_color='#2b2b2b', border_width=2, border_color="#444444", corner_radius=15)
+        self.misc_buttons_frame = ctk.CTkFrame(self.main_menu_frame, fg_color='#101010', border_width=6, border_color="#3A78C2", corner_radius=50)
         self.misc_buttons_frame.grid(row = 0, column = 0, padx=20, pady=20)
 
         self.misc_buttons_frame.grid_columnconfigure(0, weight=1)
         self.misc_buttons_frame.grid_rowconfigure((0,1,2), weight=1)
 
-        self.fav_loc_frame = ctk.CTkFrame(self.main_menu_frame)
+        self.fav_loc_frame = ctk.CTkFrame(self.main_menu_frame, corner_radius=50, border_width=6, fg_color='#101010', border_color="#3A78C2")
         self.fav_loc_frame.grid(row = 0, column = 1, padx=20, pady=20) 
 
         self.fav_loc_frame.grid_columnconfigure((0,1,2,3), weight=1)
@@ -122,22 +123,46 @@ class Weather_GUI:
         self.label_current_selected_location = ctk.CTkLabel(self.misc_buttons_frame, text="No Location Selected", font=('Arial', 30))
         self.label_current_selected_location.grid(row = 2, column = 0, padx = 20, pady=20)
 
-        self.set_all_button_theme()
+        self.set_all_themes()
 
         self.root.mainloop()
 
-    def set_all_button_theme(self):
+    def set_all_themes(self):
         for widget in self.root.winfo_children():
-            self.force_button_color(widget)
+            self.set_button_color(widget)
+            self.set_label_color(widget)
+            self.set_frame_color(widget)
 
-    def force_button_color(self, widget):
+    def set_button_color(self, widget):
         
         if isinstance(widget, ctk.CTkButton):
-            widget.configure(fg_color="black", text_color="white")
+            widget.configure(fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
             return
 
         for window in widget.winfo_children():
-            self.force_button_color(window)
+            self.set_button_color(window)
+
+    def set_label_color(self, widget):
+
+        if isinstance(widget, ctk.CTkLabel):
+            widget.configure(text_color="#FFFFFF")
+            return
+
+        for window in widget.winfo_children():
+            self.set_label_color(window)
+
+    def set_frame_color(self, widget):
+
+        if isinstance(widget, ctk.CTkFrame):
+            # current = widget.cget("fg_color")
+            # if current in ("#2b2b2b", "#1e1e1e", "#262626"):
+            #     return #skip these colors
+
+            widget.configure(fg_color="#101010", corner_radius=75)
+            return
+
+        for window in widget.winfo_children():
+            self.set_frame_color(window)
 
 
     def create_refresh_thread(self):
@@ -364,7 +389,7 @@ class Weather_GUI:
         self.display_info_window()
 
     def make_box(self, parent, text="", font=('Arial', 30)):
-        box = ctk.CTkFrame(parent, fg_color="#262626", border_width=2, border_color="#4da6ff",corner_radius=16, width=280, height=90)
+        box = ctk.CTkFrame(parent, fg_color="#262626", border_width=2, border_color="#4da6ff",corner_radius=75, width=280, height=90)
         box.pack_propagate(False)
 
         label = ctk.CTkLabel(box, text=text, font=font, anchor="center", wraplength=260)
@@ -423,7 +448,7 @@ class Weather_GUI:
         self.sunscreen_box, self.label_sunscreen_check = self.make_box(cond_grid)
         self.sunscreen_box.grid(row=0, column=1, padx=20, pady=10)
 
-        self.moon_box = ctk.CTkFrame(self.info_frame,fg_color="#262626",border_width=2, border_color="#4da6ff", corner_radius=12,width=180, height=180)
+        self.moon_box = ctk.CTkFrame(self.info_frame,fg_color="#262626",border_width=2, border_color="#4da6ff", corner_radius=15,width=180, height=180)
         self.moon_box.pack(pady=20)
 
         self.label_current_moon_phase = ctk.CTkLabel(self.moon_box, image=None, text="")
