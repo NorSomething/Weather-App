@@ -52,25 +52,25 @@ class Weather_GUI:
             #->> Description ->> not Grid
         #Conditional Frames --> Grid: each cell has information of stuff that needs computing (need sunscreen umrella)
 
-        self.top_frame = ctk.CTkFrame(self.root, fg_color="#101010", border_width=6, border_color="#3A78C2", corner_radius=75)
+        self.top_frame = ctk.CTkFrame(self.root, fg_color="#101010", border_width=6, border_color="#000058", corner_radius=75)
         self.top_frame.pack(padx=20, pady=20)
 
         self.top_frame.grid_columnconfigure((0,1,2,3), weight=1)
         self.top_frame.grid_rowconfigure((0), weight=1)
 
-        self.main_menu_frame = ctk.CTkFrame(self.root, fg_color='#101010', border_width=6, border_color="#3A78C2", corner_radius=75)
+        self.main_menu_frame = ctk.CTkFrame(self.root, fg_color='#101010', border_width=6, border_color="#000058", corner_radius=75)
         self.main_menu_frame.pack(padx=20, pady=20)
         
         self.main_menu_frame.grid_columnconfigure((0,1), weight=1)
         self.main_menu_frame.grid_rowconfigure(0, weight=1)
 
-        self.misc_buttons_frame = ctk.CTkFrame(self.main_menu_frame, fg_color='#101010', border_width=6, border_color="#3A78C2", corner_radius=50)
+        self.misc_buttons_frame = ctk.CTkFrame(self.main_menu_frame, fg_color='#101010', border_width=6, border_color="#000058", corner_radius=50)
         self.misc_buttons_frame.grid(row = 0, column = 0, padx=20, pady=20)
 
         self.misc_buttons_frame.grid_columnconfigure(0, weight=1)
         self.misc_buttons_frame.grid_rowconfigure((0,1,2), weight=1)
 
-        self.fav_loc_frame = ctk.CTkFrame(self.main_menu_frame, corner_radius=50, border_width=6, fg_color='#101010', border_color="#3A78C2")
+        self.fav_loc_frame = ctk.CTkFrame(self.main_menu_frame, corner_radius=50, border_width=6, fg_color='#101010', border_color="#000058")
         self.fav_loc_frame.grid(row = 0, column = 1, padx=20, pady=20) 
 
         self.fav_loc_frame.grid_columnconfigure((0,1,2,3), weight=1)
@@ -79,13 +79,13 @@ class Weather_GUI:
         self.label = ctk.CTkLabel(self.top_frame, text='Weather App', font=('Arial', 55))
         self.label.grid(row = 0, column=0,padx=10, pady=10)
 
-        self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30))
+        self.button_map = ctk.CTkButton(self.top_frame, text='Open Map', command=self.show_map, font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.button_map.grid(row = 1, column=0, padx=20, pady=20)
 
         self.text_box_city = ctk.CTkTextbox(self.top_frame, height=10, width=900, font=('Arial', 30))
         self.text_box_city.grid(row=2, column = 0, padx=20, pady=20)
 
-        self.buttonn_get_city_info = ctk.CTkButton(self.top_frame, text="Get Weather Info of City : ", command=self.city_button_clicked, font=('Arial', 30))
+        self.buttonn_get_city_info = ctk.CTkButton(self.top_frame, text="Get Weather Info of City : ", command=self.city_button_clicked, font=('Arial', 30) ,fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.buttonn_get_city_info.grid(row=3, column=0, padx=20, pady=20)
 
         #for fav places:
@@ -102,68 +102,30 @@ class Weather_GUI:
         
         
 
-        self.button_get_fav1 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc : {self.get_loc_from_lat_long(onel1, onel2)}', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30))
+        self.button_get_fav1 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc : {self.get_loc_from_lat_long(onel1, onel2)}', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.button_get_fav1.grid(row = 0, column = 0, padx=20, pady=20)
 
-        self.button_get_fav2 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(twol1, twol2)}', command= lambda : self.return_favinfo('fav_place2'), font=('Arial', 30))
+        self.button_get_fav2 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(twol1, twol2)}', command= lambda : self.return_favinfo('fav_place2'), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white" )
         self.button_get_fav2.grid(row = 1, column = 0, padx=20, pady=20)
 
-        self.button_get_fav3 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(threel1, threel2)}', command= lambda : self.return_favinfo('fav_place3'), font=('Arial', 30))
+        self.button_get_fav3 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(threel1, threel2)}', command= lambda : self.return_favinfo('fav_place3'), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.button_get_fav3.grid(row = 2, column = 0, padx=20, pady=20)
 
-        self.button_get_fav4 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(fourl1, fourl2)}', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30))
+        self.button_get_fav4 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc {self.get_loc_from_lat_long(fourl1, fourl2)}', command= lambda : self.return_favinfo('fav_place4'), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.button_get_fav4.grid(row = 3, column = 0, padx=20, pady=20)
 
-        self.button_get_weekly = ctk.CTkButton(self.misc_buttons_frame, text="Get Weekly Info", command= self.get_weekly_info, font=('Arial', 30))
+        self.button_get_weekly = ctk.CTkButton(self.misc_buttons_frame, text="Get Weekly Info", command= self.get_weekly_info,  font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.button_get_weekly.grid(row = 0, column = 0, padx=20, pady=20)
 
-        self.button_refresh_window = ctk.CTkButton(self.misc_buttons_frame, text="Refresh Window", command=self.create_refresh_thread, font=('Arial', 30))
+        self.button_refresh_window = ctk.CTkButton(self.misc_buttons_frame, text="Refresh Window", command=self.create_refresh_thread, fg_color="#4A90E2", hover_color="#3A78C2", text_color="white", font=('Arial', 30))
         self.button_refresh_window.grid(row = 1, column = 0, padx=20, pady=20)
 
         self.label_current_selected_location = ctk.CTkLabel(self.misc_buttons_frame, text="No Location Selected", font=('Arial', 30))
         self.label_current_selected_location.grid(row = 2, column = 0, padx = 20, pady=20)
 
-        self.set_all_themes()
+        # self.set_all_themes()
 
         self.root.mainloop()
-
-    def set_all_themes(self):
-        for widget in self.root.winfo_children():
-            self.set_button_color(widget)
-            self.set_label_color(widget)
-            self.set_frame_color(widget)
-
-    def set_button_color(self, widget):
-        
-        if isinstance(widget, ctk.CTkButton):
-            widget.configure(fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
-            return
-
-        for window in widget.winfo_children():
-            self.set_button_color(window)
-
-    def set_label_color(self, widget):
-
-        if isinstance(widget, ctk.CTkLabel):
-            widget.configure(text_color="#FFFFFF")
-            return
-
-        for window in widget.winfo_children():
-            self.set_label_color(window)
-
-    def set_frame_color(self, widget):
-
-        if isinstance(widget, ctk.CTkFrame):
-            # current = widget.cget("fg_color")
-            # if current in ("#2b2b2b", "#1e1e1e", "#262626"):
-            #     return #skip these colors
-
-            widget.configure(fg_color="#101010", corner_radius=75)
-            return
-
-        for window in widget.winfo_children():
-            self.set_frame_color(window)
-
 
     def create_refresh_thread(self):
         self.show_refresh_loading()

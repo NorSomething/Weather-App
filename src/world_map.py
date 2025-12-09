@@ -14,7 +14,7 @@ class world_map:
 
     def __init__(self, parent, pos):
 
-        self.pos = pos
+        self.pos = pos #this is storing return_coords() from main.py
 
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Map")
@@ -52,10 +52,7 @@ class world_map:
 
 
     def show_fav_place_window(self):
-        fav_place.select_fav_places(self.window, self.return_loc_fav)
-
-    def return_loc_fav(self, loc):
-        print("return fav locs triggered")
+        fav_place.select_fav_places(self.window)
 
     def put_marker(self, coords):
         print("put marker() triggered", coords)
@@ -66,7 +63,7 @@ class world_map:
     def select_pos(self):
         print("select pos() triggered", self.position)
         if self.position:
-            self.pos(self.position)
+            self.pos(self.position) #calling return_coords(position)
             messagebox.showinfo("Info", "Weather Updated in App.")
         else:
             messagebox.showwarning("No Location", "No Location Selected.")

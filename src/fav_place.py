@@ -11,11 +11,8 @@ import json
 
 class select_fav_places:
 
-    def __init__(self, parent, favplace):
+    def __init__(self, parent):
         
-
-        self.favplace = favplace
-
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Select Fav Locations")
         self.window.geometry('1680x720')
@@ -30,11 +27,9 @@ class select_fav_places:
         self.fav_places_frame.columnconfigure((0), weight=1)
 
         self.map_widget = tkintermapview.TkinterMapView(self.parent_frame, width=1280, height=720, corner_radius=15)
-        #self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
         self.map_widget.grid(row = 0, column=1, padx=10, pady=10)
 
-        self.fav_pos = None
-        self.map_widget.add_left_click_map_command(self.put_marker)
+        self.map_widget.add_left_click_map_command(self.put_marker) 
 
         self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
         self.map_widget.set_zoom(15)
@@ -53,17 +48,16 @@ class select_fav_places:
         self.select_fav_button4.grid(row=3, column=0, padx=10, pady=20)
 
 
-    def put_marker(self, coords):
+    def put_marker(self, coords): 
         self.map_widget.set_marker(coords[0], coords[1], text="Selected Location")
         self.fav_pos = coords
-        self.favplace(self.fav_pos)
 
     def store_data(self, fav_key):
 
         try:
-            with open('fav_places.json', 'r') as f:
+            with open('fav_places.json', 'r') as f: #json is already there
                 data = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
+        except (FileNotFoundError, json.JSONDecodeError): #if error, then json has not been created
             data = dict()
 
         data[fav_key] = self.fav_pos
@@ -72,3 +66,4 @@ class select_fav_places:
             json.dump(data, f, indent=4)
 
 
+ 
