@@ -16,11 +16,12 @@ class select_fav_places:
         self.window = ctk.CTkToplevel(parent)
         self.window.title("Select Fav Locations")
         self.window.geometry('1680x720')
+        self.window.configure(fg_color="#101010")
 
-        self.parent_frame = ctk.CTkFrame(self.window)
+        self.parent_frame = ctk.CTkFrame(self.window, fg_color="#101010")
         self.parent_frame.pack(pady=5)
 
-        self.fav_places_frame = ctk.CTkFrame(self.parent_frame)
+        self.fav_places_frame = ctk.CTkFrame(self.parent_frame, fg_color="#101010")
         self.fav_places_frame.grid(row = 0, column = 0, pady=5)
 
         self.fav_places_frame.rowconfigure((0,1,2,3), weight=1)
@@ -35,16 +36,16 @@ class select_fav_places:
         self.map_widget.set_zoom(15)
 
         #passing lambda funcition here cuz command cant take functions with parameters
-        self.select_fav_button1 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place1"), text='Set location as Fav Place 1', font=('Arial', 25))
+        self.select_fav_button1 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place1"), text='Set location as Fav Place 1', font=('Arial', 25),fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.select_fav_button1.grid(row=0, column=0, padx=10, pady=20)
 
-        self.select_fav_button2 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place2"), text='Set location as Fav Place 2', font=('Arial', 25))
+        self.select_fav_button2 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place2"), text='Set location as Fav Place 2', font=('Arial', 25),fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.select_fav_button2.grid(row=1, column=0, padx=10, pady=20)
         
-        self.select_fav_button3 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place3"), text='Set location as Fav Place 3', font=('Arial', 25))
+        self.select_fav_button3 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place3"), text='Set location as Fav Place 3', font=('Arial', 25),fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.select_fav_button3.grid(row=2, column=0, padx=10, pady=20)
 
-        self.select_fav_button4 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place4"), text='Set location as Fav Place 4', font=('Arial', 25))
+        self.select_fav_button4 = ctk.CTkButton(self.fav_places_frame, command= lambda : self.store_data("fav_place4"), text='Set location as Fav Place 4', font=('Arial', 25),fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.select_fav_button4.grid(row=3, column=0, padx=10, pady=20)
 
 

@@ -52,25 +52,25 @@ class Weather_GUI:
             #->> Description ->> not Grid
         #Conditional Frames --> Grid: each cell has information of stuff that needs computing (need sunscreen umrella)
 
-        self.top_frame = ctk.CTkFrame(self.root, fg_color="#101010", border_width=6, border_color="#000058", corner_radius=75)
+        self.top_frame = ctk.CTkFrame(self.root, fg_color="#101010", border_width=6, border_color="#3A78C2", corner_radius=75)
         self.top_frame.pack(padx=20, pady=20)
 
         self.top_frame.grid_columnconfigure((0,1,2,3), weight=1)
         self.top_frame.grid_rowconfigure((0), weight=1)
 
-        self.main_menu_frame = ctk.CTkFrame(self.root, fg_color='#101010', border_width=6, border_color="#000058", corner_radius=75)
+        self.main_menu_frame = ctk.CTkFrame(self.root, fg_color='#101010', border_width=6, border_color="#3A78C2", corner_radius=75)
         self.main_menu_frame.pack(padx=20, pady=20)
         
         self.main_menu_frame.grid_columnconfigure((0,1), weight=1)
         self.main_menu_frame.grid_rowconfigure(0, weight=1)
 
-        self.misc_buttons_frame = ctk.CTkFrame(self.main_menu_frame, fg_color='#101010', border_width=6, border_color="#000058", corner_radius=50)
+        self.misc_buttons_frame = ctk.CTkFrame(self.main_menu_frame, fg_color='#101010', border_width=6, border_color="#3A78C2", corner_radius=50)
         self.misc_buttons_frame.grid(row = 0, column = 0, padx=20, pady=20)
 
         self.misc_buttons_frame.grid_columnconfigure(0, weight=1)
         self.misc_buttons_frame.grid_rowconfigure((0,1,2), weight=1)
 
-        self.fav_loc_frame = ctk.CTkFrame(self.main_menu_frame, corner_radius=50, border_width=6, fg_color='#101010', border_color="#000058")
+        self.fav_loc_frame = ctk.CTkFrame(self.main_menu_frame, corner_radius=50, border_width=6, fg_color='#101010', border_color="#3A78C2")
         self.fav_loc_frame.grid(row = 0, column = 1, padx=20, pady=20) 
 
         self.fav_loc_frame.grid_columnconfigure((0,1,2,3), weight=1)
