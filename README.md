@@ -5,7 +5,8 @@
 A simple weather app written in Python using CustomTkinter for the GUI and the Visual Crossing Weather API for live weather data. 
 
 ## Video Demo
-https://github.com/user-attachments/assets/283c62be-08bb-4d72-9dd3-b0376e2e1d5e
+https://github.com/user-attachments/assets/283c62be-08bb-4d72-9dd3-b0376e2e1d5e <br>
+Screenshots of the different windows are available in the "readme_assets" folder.
 
 ## Installation
 
