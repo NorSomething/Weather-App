@@ -6,9 +6,8 @@ import numpy as np
 
 class weekly_stats:
 
-    def __init__(self, parent, weather_json, data_list):
+    def __init__(self, parent, data_list):
 
-        self.weather_json = weather_json
         self.data_list = data_list
         
         self.weekly_stats_window = ctk.CTkToplevel(parent)

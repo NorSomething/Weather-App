@@ -12,7 +12,6 @@ from main import Weather_GUI
 
 class weekly_data:
 
-    #note : fav places weekly temp does not update!!
 
     def __init__(self, parent, weekly_data_json):
 
@@ -129,8 +128,6 @@ class weekly_data:
             self.label_moon_phase = ctk.CTkLabel(self.weekly_data_frame, text="", image=img, wraplength=200, justify='center')
             self.label_moon_phase.grid(row = 8, column = i+1, padx=10, pady=10)
 
-        Weather_GUI.set_button_color()
-        Weather_GUI.set_frame_color()
 
     
     def put_moon_phase(self, moon_phase):
@@ -161,11 +158,8 @@ class weekly_data:
         return tk_img
 
     def extract_weekly_data(self):
-        return self.weekly_data_json["days"][:8] #this is a list??
+        return self.weekly_data_json["days"][:8] 
         #first seven days from main.py
-
-    def give_json(self):
-        return self.weekly_data_json
 
     def open_weeky_stats_window(self):
         data_list = []
@@ -176,4 +170,4 @@ class weekly_data:
         data_list.append(self.precip_array)
         data_list.append(self.sunrise_array)
         data_list.append(self.sunset_array)
-        weekly_data_stats.weekly_stats(self.weekly_data_window, self.give_json, data_list) 
+        weekly_data_stats.weekly_stats(self.weekly_data_window,  data_list) 

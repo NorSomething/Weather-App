@@ -25,7 +25,7 @@ class world_map:
         self.weather_map_frame.pack(padx=10, pady=10, side='bottom', fill='x')
 
         #grid configs
-        self.weather_map_frame.grid_columnconfigure((0,1), weight=1)
+        self.weather_map_frame.grid_columnconfigure((0), weight=1)
         self.weather_map_frame.grid_rowconfigure((0,1,2,3,4), weight=1)
 
         self.map_widget = tkintermapview.TkinterMapView(self.weather_map_frame, width=1280, height=720, corner_radius=15)
@@ -40,8 +40,8 @@ class world_map:
         
 
 
-        self.label_find_information_button = ctk.CTkButton(self.weather_map_frame, command=self.select_pos, text="Find Information", font=('Arial', 30),fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
-        self.label_find_information_button.grid(row = 1, column = 0, padx=10, pady=10)
+        self.button_find_information_button = ctk.CTkButton(self.weather_map_frame, command=self.select_pos, text="Find Information", font=('Arial', 30),fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
+        self.button_find_information_button.grid(row = 1, column = 0, padx=10, pady=10)
 
         self.quit_button = ctk.CTkButton(self.weather_map_frame,text="Close Map", command=self.window.destroy, font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.quit_button.grid(row = 3, column = 0, padx=10, pady=10)
