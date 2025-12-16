@@ -440,7 +440,7 @@ class Weather_GUI:
 
         currnet_moon_phase = self.weather_info['currentConditions']['moonphase']
 
-        moon_image = self.show_moon_phases(currnet_moon_phase) #moon phase still needs more details
+        moon_image = self.show_moon_phases(currnet_moon_phase) 
 
         current_time = self.weather_info['currentConditions']['datetime']
 
