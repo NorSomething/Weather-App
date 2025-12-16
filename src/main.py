@@ -18,8 +18,6 @@ import weekly_data
 
 load_dotenv()
 
-#NOte : background colors super ugly as of now!! fix!!
-
 class Weather_GUI:
 
     def __init__(self):
@@ -39,18 +37,9 @@ class Weather_GUI:
 
         self.info_window = None #for not creating extra windows
 
-        #self.date = datetime.datetime.now()
-
         self.user_selected_fav_loc = 0
 
         self.city_entered_check = False
-
-        #Top Frame --> Title, Open Map Button, Show Information Button
-        #Week Frame --> Days of the week
-        #Info Frame --> Grid : each cell has one information
-            #->> Basic Infos ->> Grid 
-            #->> Description ->> not Grid
-        #Conditional Frames --> Grid: each cell has information of stuff that needs computing (need sunscreen umrella)
 
         self.top_frame = ctk.CTkFrame(self.root, fg_color="#101010", border_width=6, border_color="#3A78C2", corner_radius=75)
         self.top_frame.pack(padx=20, pady=20)
@@ -99,9 +88,6 @@ class Weather_GUI:
         threel1, threel2 = data['fav_place3'][0], data['fav_place3'][1]
         fourl1, fourl2 = data['fav_place4'][0], data['fav_place4'][1]
 
-        
-        
-
         self.button_get_fav1 = ctk.CTkButton(self.fav_loc_frame, text=f'Get Info of Fav Loc : {self.get_loc_from_lat_long(onel1, onel2)}', command= lambda : self.return_favinfo('fav_place1'), font=('Arial', 30), fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.button_get_fav1.grid(row = 0, column = 0, padx=20, pady=20)
 
@@ -122,8 +108,6 @@ class Weather_GUI:
 
         self.label_current_selected_location = ctk.CTkLabel(self.misc_buttons_frame, text="No Location Selected", font=('Arial', 30))
         self.label_current_selected_location.grid(row = 2, column = 0, padx = 20, pady=20)
-
-        # self.set_all_themes()
 
         self.root.mainloop()
 
@@ -268,12 +252,6 @@ class Weather_GUI:
             return msg
         return msg
 
-    '''
-    main.py fetches JSON
-    main.py passes JSON into weekly_data
-    weekly_data extracts first 7 days
-    weekly window displays them'''
-
     def get_weekly_info(self):
 
         if self.place is None and not self.user_selected_fav_loc:
@@ -315,8 +293,6 @@ class Weather_GUI:
             messagebox.showerror("No Data", "Something went wrong with API\nPlease try again in a few minutes.")
     
     def get_weather_data_city(self, city):
-
-        #self.city_entered_check = True
 
         #visual crossing api -> with weekly stuff
         url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{city}?unitGroup=metric&key={self.API_KEY}"
