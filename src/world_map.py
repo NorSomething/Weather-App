@@ -29,7 +29,6 @@ class world_map:
         self.weather_map_frame.grid_rowconfigure((0,1,2,3,4), weight=1)
 
         self.map_widget = tkintermapview.TkinterMapView(self.weather_map_frame, width=1280, height=720, corner_radius=15)
-        #self.map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
         self.map_widget.grid(row = 0, column=0, padx=10, pady=10)
 
         self.map_widget.set_position(12.961201, 77.590783) #default starting point of map in bangalore
@@ -37,8 +36,6 @@ class world_map:
         
         self.position = None
         self.map_widget.add_left_click_map_command(self.put_marker)
-        
-
 
         self.button_find_information_button = ctk.CTkButton(self.weather_map_frame, command=self.select_pos, text="Find Information", font=('Arial', 30),fg_color="#4A90E2", hover_color="#3A78C2", text_color="white")
         self.button_find_information_button.grid(row = 1, column = 0, padx=10, pady=10)
