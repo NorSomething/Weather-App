@@ -15,6 +15,8 @@ Clone the repo into your device:
 
 ```bash
 git clone https://github.com/NorSomething/Weather-App.git
+cd Weather-App
+
 ```
 
 ### Install the required python modules:
